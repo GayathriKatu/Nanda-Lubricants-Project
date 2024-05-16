@@ -11,6 +11,7 @@ export const getAllOrderD = () => {
             }else{
                 console.log(data[0]);
                 resolve(data[0]);
+                // jnvkjsdvn
             }
         })
 
