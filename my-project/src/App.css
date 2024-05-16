@@ -1,0 +1,52 @@
+/* App.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ribbon {
+    background-color: #010101;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-right: 10px;
+  }
+  
+  .company-info {
+    flex-grow: 1;
+  }
+  
+  .company-info h1,
+  .company-info p {
+    margin: 0;
+    font-size: 13px;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: right;
+    padding: 5px 0;
+  }
+  
+  .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: medium;
+    color: #040404;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover {
+    background-color: #040404;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
