@@ -5,7 +5,7 @@ export const getAllOrder = () => {
         
         const q = `SELECT o.ORDER_ID, o.DATE_PLACED, o.TOTAL_VALUE, r.SHOP_NAME, r.ROUTE_NAME
         FROM order_ o
-        JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID`;
+        JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID `;
         
         db.query ( q,(err,data) => {
             if(err){

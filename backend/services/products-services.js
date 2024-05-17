@@ -21,6 +21,23 @@ export const getAllPro = () => {
     })
 }
 
+export const getAllProNames = () => {
+    return new Promise((resolve, reject) => {
+        
+        const q = `SELECT PRODUCT_NAME FROM products`;
+        
+        db.query(q, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                const productNames = data.map(item => item.PRODUCT_NAME);
+                resolve(productNames);
+            }
+        });
+
+    });
+};
+
 export const AddproductService = ( productId,productName,description,unitPrice ) => {
     return new Promise ( (resolve,reject) => {
         const q = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, UNIT_PRICE) VALUES (?,?,?,?)`;

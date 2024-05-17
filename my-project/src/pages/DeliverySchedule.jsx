@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DateTimePicker from "../Components/DateTimePicker";
 import PrimaryButton from "../Components/PrimaryButton";
 import DropDown from "../Components/DropDown";
 import DeliveryCard from "../Components/DeliveryCard";
 
-
 function DeliverySchedule() {
   const [selectedSortByRoute, setSelectedSortByRoute] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
+  const [details, setDetails] = useState([]);
+
+  // Fetch data from the backend
+  const fetchDetails = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/stock/details");
+      setDetails(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
 
   const handleSortByRoute = (e) => {
     setSelectedSortByRoute(e.target.value);
@@ -21,6 +36,16 @@ function DeliverySchedule() {
   const handleToDateChange = (date) => {
     setToDate(date);
   };
+
+  // Filter the details based on the selected route
+  const getFilteredDetails = () => {
+    if (selectedSortByRoute) {
+      return details.filter(detail => detail.route === selectedSortByRoute);
+    }
+    return details;
+  };
+
+  const filteredDetails = getFilteredDetails();
 
   return (
     <div className="flex flex-col w-screen bg-gray-800 text-white px-12 py-4">
@@ -47,7 +72,7 @@ function DeliverySchedule() {
             <DropDown
               className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-black"
               id="sortbyRoute"
-              options={["Alphabetical A-Z", "last Update", "out of stock"]}
+              options={["Wariyapola 01", "Pothuhera", "Kadawatha 01"]}
               value={selectedSortByRoute}
               onChange={handleSortByRoute}
             />
@@ -85,26 +110,22 @@ function DeliverySchedule() {
         </div>
       </div>
 
-
       <div className="justify-between mt-8 gap-1">
-      {/* <div className="flex flex-col justify-between items-center">
-        <DeliveryCard orderId="NL23456" shopName="Darshana Enterprises" route="Wariyapola 01" orderDate="May 02, 2024" totalPrice="663990"/>
+        {filteredDetails.length > 0 ? (
+          filteredDetails.map((detail) => (
+            <DeliveryCard
+              key={detail.orderId}
+              orderId={detail.orderId}
+              shopName={detail.shopName}
+              route={detail.route}
+              orderDate={detail.orderDate}
+              totalPrice={detail.totalPrice}
+            />
+          ))
+        ) : (
+          <p className="text-white">No deliveries found for the selected route.</p>
+        )}
       </div>
-      <div className="flex flex-col justify-between items-center">
-        <DeliveryCard orderId="NL23456" shopName="Darshana Enterprises" route="Wariyapola 01" orderDate="May 02, 2024" totalPrice="663990"/>
-      </div>
-      <div className="flex flex-col justify-between items-center">
-        <DeliveryCard orderId="NL23456" shopName="Darshana Enterprises" route="Wariyapola 01" orderDate="May 02, 2024" totalPrice="663990"/>
-      </div>
-      <div className="flex flex-col justify-between items-center">
-        <DeliveryCard orderId="NL23456" shopName="Darshana Enterprises" route="Wariyapola 01" orderDate="May 02, 2024" totalPrice="663990"/>
-      </div>
-      <div className="flex flex-col justify-between items-center">
-        <DeliveryCard orderId="NL23456" shopName="Darshana Enterprises" route="Wariyapola 01" orderDate="May 02, 2024" totalPrice="663990"/>
-      </div> */}
-      <DeliveryCard/>
-      </div>
-      
     </div>
   );
 }

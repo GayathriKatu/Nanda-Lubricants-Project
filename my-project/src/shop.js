@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PrimaryButton from './Components/PrimaryButton'; 
+import axios from 'axios';
 
 function Shop() {
-
-  
-
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState('');
   const [userID, setUserID] = useState('');
   const [shopName, setShopName] = useState('');
   const [route, setRoute] = useState('');
   const [category, setCategory] = useState('');
-  const [product, setProduct] = useState('');
   const [quantity, setQuantity] = useState('');
   const [volume, setVolume] = useState('');
+
+  const fetchDetails = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/products/productnames");
+      setProducts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
 
   const volumeOptions = [
     '100 ml',
@@ -94,7 +106,11 @@ function Shop() {
                 className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
               >
                 <option value="">Select Product</option>
-                {/* Add product options here */}
+                {products.map((productName, index) => (
+                  <option key={index} value={productName}>
+                    {productName}
+                  </option>
+                ))}
               </select>
               <label>Quantity:</label>
               <input

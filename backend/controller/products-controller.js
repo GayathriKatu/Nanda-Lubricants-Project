@@ -1,9 +1,20 @@
-import {getAllPro, AddproductService} from '../services/products-services.js';
+import {getAllPro, AddproductService, getAllProNames} from '../services/products-services.js';
 
 export const proDetails = async (req,res) => {
     try{
      
      const data = await getAllPro();
+     res.json(data);
+     
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export const proNames = async (req,res) => {
+    try{
+     
+     const data = await getAllProNames();
      res.json(data);
      
     }catch(err){

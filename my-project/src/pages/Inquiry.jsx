@@ -15,15 +15,19 @@ function Inquiry({ onClose }) {
       ...pre,
       [e.target.name]: e.target.value
     }));
+    
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(inquiry.orderId);
     try {
       const res = await axios.post('http://localhost:8000/api/inquiry/add', inquiry);
       console.log(res.data);
+      
     } catch (err) {
       console.log(err.response.data);
+      console.log('hi');
     } finally {
       onClose();
     }

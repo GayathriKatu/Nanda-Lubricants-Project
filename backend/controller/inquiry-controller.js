@@ -3,6 +3,7 @@ import { AddinquiryService } from '../services/inquiry-services.js';
 
 export const Addinquiry = async (req, res) => {
   const { orderId, description } = req.body;
+  console.log(req);
   console.log(orderId, description); // Check if these values are correctly received
   try {
     const data = await AddinquiryService(orderId, description);
@@ -11,7 +12,7 @@ export const Addinquiry = async (req, res) => {
     if (err.code === 'ER_DUP_ENTRY') {
       return res.status(409).json('Entry already exists');
     } else {
-      return res.status(500).json('Server side error');
+      return res.status(500).json(err.message);
     }
   }
 }

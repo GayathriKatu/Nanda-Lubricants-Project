@@ -37,3 +37,17 @@ export const deleteStock = (stockId) => {
         });
     });
 };
+
+export const AddstockService = ( productName, quantity, unitPrice ) => {
+    return new Promise ( (resolve,reject) => {
+        const q = `INSERT INTO stock (PRODUCT_NAME, QUANTITY, UNIT_PRICE) VALUES (?,?,?)`;
+
+        db.query( q,[ productName, quantity, unitPrice ] , (err,data) =>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('added!');
+            }
+        })
+    })
+}
