@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import PrimaryButton from './Components/PrimaryButton'; 
 
 function Shop() {
+
+  
+
   const [userID, setUserID] = useState('');
   const [shopName, setShopName] = useState('');
   const [route, setRoute] = useState('');
@@ -19,10 +22,22 @@ function Shop() {
     '5 liters'
   ];
 
+  const categoryOptions = [
+    'Diesel',
+    'Petrol',
+    'Motor Cycle',
+    'Three Wheeler',
+    'Car',
+    'Truck',
+    'Bus'
+  ];
+
   const handleAddOrder = () => {
+    // Add order logic here
   };
 
   const handleSubmitOrder = () => {
+    // Submit order logic here
   };
 
   return (
@@ -65,6 +80,12 @@ function Shop() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
               >
+                <option value="">Select Category</option>
+                {categoryOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
               </select>
               <label>Product:</label>
               <select
@@ -72,6 +93,8 @@ function Shop() {
                 onChange={(e) => setProduct(e.target.value)}
                 className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
               >
+                <option value="">Select Product</option>
+                {/* Add product options here */}
               </select>
               <label>Quantity:</label>
               <input

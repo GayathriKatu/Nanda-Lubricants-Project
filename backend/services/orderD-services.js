@@ -11,9 +11,23 @@ export const getAllOrderD = () => {
             }else{
                 console.log(data[0]);
                 resolve(data[0]);
-                // jnvkjsdvn
+        
             }
         })
 
+    })
+}
+
+export const AddorderService = ( quantity, volume ) => {
+    return new Promise ( (resolve,reject) => {
+        const q = `INSERT INTO order_details (QUANTITY, VOLUME) VALUES (?, ?, ?)`;
+
+        db.query( q,[quantity, volume ] , (err,data) =>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('added!');
+            }
+        })
     })
 }

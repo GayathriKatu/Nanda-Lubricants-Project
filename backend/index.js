@@ -8,6 +8,8 @@ import { retailerRoutes } from './routes/retailer-router.js';
 import { orderRoutes } from './routes/order-router.js';
 import { orderDRoutes } from './routes/orderD-router.js';
 import { stockRoutes } from './routes/stock-router.js';
+import { inquiryRoutes } from './routes/inquiry-router.js';
+
 
 
 const app = express();
@@ -20,7 +22,7 @@ db.connect( (err) => {
         console.error('db error: '+ err.stack);
         return;
     }
-    console.log('meka set');
+    console.log('db working');
 })
 
 //meken mokkd wenne
@@ -31,6 +33,8 @@ app.use('/api/retailer', retailerRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/orderD', orderDRoutes)
 app.use('/api/stock', stockRoutes)
+app.use('/api/inquiry', inquiryRoutes)
+
 
 
 
