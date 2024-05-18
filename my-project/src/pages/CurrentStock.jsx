@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../Components/SearchBar";
 import PrimaryButton from "../Components/PrimaryButton";
 import DropDown from "../Components/DropDown";
 import ProductCard from "../Components/ProductCard";
 import UpdateStock from "./UpdateStock"; // Step 1: Import the UpdateStock component
+import axios from 'axios';
 
 function CurrentStock() {
+  const [products, setProducts] = useState([]);
   const [selectedSortBy, setSelectedSortBy] = useState('');
   const [SelectedStockAlert, setSelectedStockAlert] = useState('');
   const [SelectedCategory, setSelectedCategory] = useState('');
   const [showUpdateStock, setShowUpdateStock] = useState(false); // Step 2: State to control the visibility of the popup
+
+  const fetchDetails = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/products/productnames");
+      setProducts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
 
   const handleSortBy = (e) => {
     setSelectedSortBy(e.target.value);

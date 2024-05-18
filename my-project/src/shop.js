@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import PrimaryButton from './Components/PrimaryButton'; 
+import PrimaryButton from './Components/PrimaryButton';
+import PreviewComponent from './Components/PreviewComponent';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 function Shop() {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState('');
-  const [userID, setUserID] = useState('');
-  const [shopName, setShopName] = useState('');
-  const [route, setRoute] = useState('');
   const [category, setCategory] = useState('');
   const [quantity, setQuantity] = useState('');
   const [volume, setVolume] = useState('');
@@ -44,6 +43,8 @@ function Shop() {
     'Bus'
   ];
 
+  const navigate = useNavigate();
+
   const handleAddOrder = () => {
     // Add order logic here
   };
@@ -52,38 +53,22 @@ function Shop() {
     // Submit order logic here
   };
 
+  const tableRows = [
+    { productid: 'P-123456', productname: "REVTRON GOLD ULTRA", volume: '5 L', quantity: '50', unitprice: '16560', subtotal: '828000' },
+    { productid: 'P-123456', productname: "REVTRON GOLD ULTRA", volume: '5 L', quantity: '50', unitprice: '16560', subtotal: '828000' },
+    { productid: 'P-123456', productname: "REVTRON GOLD ULTRA", volume: '5 L', quantity: '50', unitprice: '16560', subtotal: '828000' },
+    { productid: 'P-123456', productname: "REVTRON GOLD ULTRA", volume: '5 L', quantity: '50', unitprice: '16560', subtotal: '828000' },
+    { productid: 'P-123456', productname: "REVTRON GOLD ULTRA", volume: '5 L', quantity: '50', unitprice: '16560', subtotal: '828000' }
+  ];
+
   return (
     <div className="bg-gray-800 min-h-screen px-24 py-10">
       <div className="flex mb-8">
         <p className="text-3xl text-white font-semibold px-7">ORDER</p>
       </div>
-      <div className="container mx-auto p-6 rounded-lg">
+      <div className="container p-4 rounded-lg">
         <div className="grid grid-cols-2 gap-6">
-          <div className="bg-transparent">
-            <h2 className="text-xl text-white font-semibold mb-12 mt-2">Retailer Details</h2>
-            <input
-              type="text"
-              placeholder="User ID"
-              value={userID}
-              onChange={(e) => setUserID(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
-            />
-            <input
-              type="text"
-              placeholder="Shop Name"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
-            />
-            <input
-              type="text"
-              placeholder="Route"
-              value={route}
-              onChange={(e) => setRoute(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div className="bg-gray-700 p-4 rounded-lg shadow text-white flex flex-col justify-between">
+          <div className="bg-gray-700 p-4 rounded-lg shadow text-white flex flex-col">
             <h2 className="text-xl font-semibold mb-4">Order Details</h2>
             <div>
               <label>Category:</label>
@@ -133,13 +118,16 @@ function Shop() {
                 ))}
               </select>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-4">
               <PrimaryButton text="Add" onClick={handleAddOrder} />
             </div>
           </div>
+          <div className="bg-transparent">
+            <PreviewComponent tableRows={tableRows} />
+          </div>
         </div>
         <div className="mt-4 flex justify-end">
-          <PrimaryButton text="Place Order" onClick={handleSubmitOrder} />
+          <PrimaryButton text="Place Order" onClick={() => navigate("/orderpopup")} />
         </div>
       </div>
     </div>

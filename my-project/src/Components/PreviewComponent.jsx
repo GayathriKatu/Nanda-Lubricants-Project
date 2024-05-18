@@ -9,7 +9,7 @@ const PreviewComponent = ({ tableRows }) => {
 
   return (
     <div className="bg-gray-800 h-screen">
-      <div className="bg-white bg-opacity-10 rounded-lg mx-auto max-w-screen-md p-4 mt-24">
+      <div className="bg-white bg-opacity-10 rounded-lg mx-auto max-w-screen-md p-4 ">
         <p className="text-3xl text-white font-semibold mb-6">ORDER PREVIEW</p>
         <table className="w-full border-collapse">
           <thead>
@@ -39,10 +39,6 @@ const PreviewComponent = ({ tableRows }) => {
             </tr>
           </tbody>
         </table>
-        <div className="flex justify-between mt-8">
-          <PrimaryButton text="Back" />
-          <PrimaryButton text="Confirm Order" />
-        </div>
       </div>
     </div>
   );

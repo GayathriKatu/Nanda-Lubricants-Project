@@ -48,11 +48,11 @@ function UpdateStock({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Submitting product:', product);
+      //console.log('Submitting product:', product);
       const productRes = await axios.post('http://localhost:8000/api/products/add', product);
       console.log('Product response:', productRes.data);
 
-      console.log('Submitting stock:', stock);
+      //console.log('Submitting stock:', stock);
       const stockRes = await axios.post('http://localhost:8000/api/stock/add', stock);
       console.log('Stock response:', stockRes.data);
     } catch (err) {
