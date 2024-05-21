@@ -12,14 +12,14 @@ export const orderDDetails = async (req,res) => {
 }
 
 export const AddOrder = async (req,res) => {
-    const {quantity, volume }  = req.body;
-    console.log(quantity, volume)
+    const {productName, quantity, volume }  = req.body;
+    console.log(productName, quantity, volume)
     try{
-        const data = await  AddorderService(quantity, volume);
+        const data = await  AddorderService(productName, quantity, volume);
         return res.status(200).json(data);
     }catch(err){
         if(err.code == 'ER_DUP_ENTRY'){
-            return res.status(409).json('meke tiyee');
+            return res.status(409).json('this happens');
         }else{
             return res.status(500).json('server side error');
         }

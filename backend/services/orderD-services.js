@@ -18,11 +18,11 @@ export const getAllOrderD = () => {
     })
 }
 
-export const AddorderService = ( quantity, volume ) => {
+export const AddorderService = ( productName, quantity, volume ) => {
     return new Promise ( (resolve,reject) => {
-        const q = `INSERT INTO order_details (QUANTITY, VOLUME) VALUES (?, ?, ?)`;
+        const q = `INSERT INTO order_details (PRODUCT_NAME, QUANTITY, VOLUME) VALUES (?, ?, ?)`;
 
-        db.query( q,[quantity, volume ] , (err,data) =>{
+        db.query( q,[productName, quantity, volume ] , (err,data) =>{
             if(err){
                 reject(err)
             }else{

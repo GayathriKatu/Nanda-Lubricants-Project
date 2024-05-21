@@ -111,20 +111,7 @@ function DeliverySchedule() {
       </div>
 
       <div className="justify-between mt-8 gap-1">
-        {filteredDetails.length > 0 ? (
-          filteredDetails.map((detail) => (
-            <DeliveryCard
-              key={detail.orderId}
-              orderId={detail.orderId}
-              shopName={detail.shopName}
-              route={detail.route}
-              orderDate={detail.orderDate}
-              totalPrice={detail.totalPrice}
-            />
-          ))
-        ) : (
-          <p className="text-white">No deliveries found for the selected route.</p>
-        )}
+        <DeliveryCard/>
       </div>
     </div>
   );

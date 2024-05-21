@@ -38,11 +38,11 @@ export const getAllProNames = () => {
     });
 };
 
-export const AddproductService = ( productId,productName,description,unitPrice ) => {
+export const AddproductService = ( productId,productName,description,unitPrice, category ) => {
     return new Promise ( (resolve,reject) => {
-        const q = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, UNIT_PRICE) VALUES (?,?,?,?)`;
+        const q = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, UNIT_PRICE, CATEGORY_ID) VALUES (?,?,?,?,?)`;
 
-        db.query( q,[ productId,productName,description,unitPrice ] , (err,data) =>{
+        db.query( q,[ productId,productName,description,unitPrice, category ] , (err,data) =>{
             if(err){
                 reject(err)
             }else{

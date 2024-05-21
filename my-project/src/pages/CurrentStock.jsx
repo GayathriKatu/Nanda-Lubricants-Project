@@ -70,12 +70,12 @@ function CurrentStock() {
             <DropDown
               className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-black"
               id="sortby"
-              options={['Alphabetical A-Z', 'last Update', 'out of stock']}
+              options={['Re order','out of stock']}
               value={selectedSortBy}
               onChange={handleSortBy}/>
           </div>
         </div>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <label htmlFor="stock alert" className="block text-sm font-medium text-white mr-2">
             SELECT ROUTE
           </label>
@@ -87,8 +87,8 @@ function CurrentStock() {
               value={SelectedStockAlert}
               onChange={handleStockAlert}/>
           </div>
-        </div>
-        <div className="flex items-center">
+        </div> */}
+        {/* <div className="flex items-center">
           <label htmlFor="category" className="block text-sm font-medium text-white mr-2">
             SELECT ROUTE
           </label>
@@ -100,7 +100,7 @@ function CurrentStock() {
               value={SelectedCategory}
               onChange={handleCategory}/>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="justify-between mt-8 gap-1">

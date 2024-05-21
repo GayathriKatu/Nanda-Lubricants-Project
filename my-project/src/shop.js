@@ -24,6 +24,10 @@ function Shop() {
     fetchDetails();
   }, []);
 
+  const handleChange = (event) => {
+    setProduct(event.target.value);
+  };
+
   const volumeOptions = [
     '100 ml',
     '200 ml',
@@ -43,11 +47,21 @@ function Shop() {
     'Bus'
   ];
 
+  const handleAddOrder = async () => {
+    try {
+      const orderData = { productName: product, quantity: quantity, volume: volume };
+      const res = await axios.post("http://localhost:8000/api/orderD/add", orderData);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const navigate = useNavigate();
 
-  const handleAddOrder = () => {
-    // Add order logic here
-  };
+  // const handleAddOrder = () => {
+  //   // Add order logic here
+  // };
 
   const handleSubmitOrder = () => {
     // Submit order logic here
