@@ -8,13 +8,15 @@ function UpdateStock({ onClose }) {
     productId: "",
     productName: "",
     description: "",
-    unitPrice: ""
+    unitPrice: "",
+    category: "" // This will be used to store the CATEGORY_ID
   });
 
   const [stock, setStock] = useState({
     productName: "",
     quantity: "",
-    unitPrice: ""
+    unitPrice: "",
+    volume: ""
   });
 
   const handleProductInputs = (e) => {
@@ -45,14 +47,26 @@ function UpdateStock({ onClose }) {
     }));
   };
 
+  const handleVolumeChange = (value) => {
+    setStock(prev => ({
+      ...prev, volume: value
+    }));
+  };
+
+  const handleCategoryChange = (value) => {
+    setProduct(prev => ({
+      ...prev, category: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //console.log('Submitting product:', product);
+      // Submitting product details
       const productRes = await axios.post('http://localhost:8000/api/products/add', product);
       console.log('Product response:', productRes.data);
 
-      //console.log('Submitting stock:', stock);
+      // Submitting stock details
       const stockRes = await axios.post('http://localhost:8000/api/stock/add', stock);
       console.log('Stock response:', stockRes.data);
     } catch (err) {
@@ -80,7 +94,8 @@ function UpdateStock({ onClose }) {
             <DropDown
               className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               id="category"
-              options={['Category 1', 'Category 2', 'Category 3']}
+              options={['PC', 'DC', 'TWC']}
+              onChange={(e) => handleCategoryChange(e.target.value)}
             />
           </div>
           <div className="w-1/2 ml-2">
@@ -88,7 +103,8 @@ function UpdateStock({ onClose }) {
             <DropDown
               className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               id="volume"
-              options={['1L', '2L', '3L', '4L']}
+              options={['1 L', '5 L', '20 L', '210 L']}
+              onChange={(e) => handleVolumeChange(e.target.value)}
             />
           </div>
         </div>

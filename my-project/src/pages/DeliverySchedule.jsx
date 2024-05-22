@@ -10,12 +10,14 @@ function DeliverySchedule() {
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [details, setDetails] = useState([]);
+  const [filteredDetails, setFilteredDetails] = useState([]);
 
   // Fetch data from the backend
   const fetchDetails = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/stock/details");
+      const res = await axios.get("http://localhost:8000/api/order/details");
       setDetails(res.data);
+      setFilteredDetails(res.data); // Initialize filteredDetails with all details
     } catch (err) {
       console.log(err);
     }
@@ -37,15 +39,19 @@ function DeliverySchedule() {
     setToDate(date);
   };
 
-  // Filter the details based on the selected route
-  const getFilteredDetails = () => {
-    if (selectedSortByRoute) {
-      return details.filter(detail => detail.route === selectedSortByRoute);
-    }
-    return details;
-  };
+  // Filter the details based on the selected route and date range
+  const filterDetails = () => {
+    const filteredByRoute = selectedSortByRoute
+      ? details.filter(detail => detail.routeName === selectedSortByRoute)
+      : details;
 
-  const filteredDetails = getFilteredDetails();
+    const filteredByDate = filteredByRoute.filter(detail => {
+      const orderDate = new Date(detail.datePlaced);
+      return orderDate >= fromDate && orderDate <= toDate;
+    });
+
+    setFilteredDetails(filteredByDate);
+  };
 
   return (
     <div className="flex flex-col w-screen bg-gray-800 text-white px-12 py-4">
@@ -108,10 +114,16 @@ function DeliverySchedule() {
             />
           </div>
         </div>
+
+        <div className="flex items-center">
+          <PrimaryButton text="FILTER" onClick={filterDetails} />
+        </div>
       </div>
 
       <div className="justify-between mt-8 gap-1">
-        <DeliveryCard/>
+        {filteredDetails.map((detail, index) => (
+          <DeliveryCard key={index} cardContent={detail} index={index}/>
+        ))}
       </div>
     </div>
   );

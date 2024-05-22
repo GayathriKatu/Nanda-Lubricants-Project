@@ -1,5 +1,5 @@
-import {getAllStock} from '../services/stock-services.js';
-import { deleteStock , AddstockService } from '../services/stock-services.js';
+import {getAllStock, getReorderProducts} from '../services/stock-services.js';
+import { deleteStock , AddstockService, getOutofStock } from '../services/stock-services.js';
 
 export const stockDetails = async (req,res) => {
     try{
@@ -23,10 +23,10 @@ export const deleteStockById = async (req, res) => {
 };
 
 export const Addstock = async (req,res) => {
-    const { productName, quantity, unitPrice }  = req.body;
-    console.log(productName, quantity, unitPrice)
+    const { productName, quantity, unitPrice, volume }  = req.body;
+    console.log(productName, quantity, unitPrice, volume)
     try{
-        const data = await  AddstockService(productName, quantity, unitPrice);
+        const data = await  AddstockService(productName, quantity, unitPrice, volume);
         return res.status(200).json(data);
     }catch(err){
         if(err.code == 'ER_DUP_ENTRY'){
@@ -36,3 +36,26 @@ export const Addstock = async (req,res) => {
         }
     }
 }
+
+export const stockOut = async (req,res) => {
+    try{
+     
+     const data = await getOutofStock();
+     res.json(data);
+     
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export const reOrder = async (req,res) => {
+    try{
+     
+     const data = await getReorderProducts();
+     res.json(data);
+     
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
