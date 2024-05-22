@@ -13,6 +13,7 @@ import OrderPreview from './pages/OrderPreview';
 import MainShop from './pages/MainShop';
 import OrderPopup from './Components/OrderPopup';
 import UpdateInventory from './Components/UpdateInventory';
+import InquiryDisplay from './pages/InquiryDisplay';
 
 
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/mainshop' element={<MainShop />} />
           <Route path='/orderpopup' element={<OrderPopup />} />
           <Route path='/updateinventory' element={<UpdateInventory />} />
+          <Route path='/inquirydisplay' element={<InquiryDisplay />} />
 
 
         </Routes>
