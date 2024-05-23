@@ -11,7 +11,6 @@ export const getAllOrder = () => {
             if(err){
                 reject(err);
             }else{
-                
                 const delivery = data.map (item => ({
                     orderId: item.ORDER_ID,
                     datePlaced: item.DATE_PLACED,
@@ -26,31 +25,46 @@ export const getAllOrder = () => {
     })
 }
 
-export const addFullOrder = async (category, product, quantity, volume, retailer, unitPrice,pid) => {
+export const addFullOrder = async (orderDetails) => {
     const datePlaced = new Date().toISOString().split('T')[0];
-    const totalValue = unitPrice * quantity;
-    
     return new Promise((resolve, reject) => {
         try {
             db.beginTransaction(async (err) => {
                 if (err) {
                     throw err;
                 }
+                const user = orderDetails[0].user;
+                const retailer = await getRetailerId(user);
+                let totalValue = 0;
+
+                orderDetails.forEach(detail => {
+                    totalValue += detail.unitPrice * detail.quantity;
+                });
+
                 db.query('INSERT INTO order_ (RETAILER_ID, DATE_PLACED, TOTAL_VALUE, ORDER_STATUS) VALUES (?, ?, ?, ?)', [retailer, datePlaced, totalValue, 'Pending'], async (err, results) => {
                     if (err) {
                         throw err;
                     }
                     const orderId = results.insertId;
-                    db.query('INSERT INTO order_details (ORDER_ID, QUANTITY, VOLUME, PRODUCT_NAME,PRODUCT_ID,UNIT_PRICE) VALUES (?, ?, ?, ?,?,?)', [orderId, quantity, volume, product,pid,unitPrice], async (err) => {
+
+                    for (const detail of orderDetails) {
+                        const { quantity, volume, product, pid, unitPrice } = detail;
+                        await new Promise((resolve, reject) => {
+                            db.query('INSERT INTO order_details (ORDER_ID, QUANTITY, VOLUME, PRODUCT_NAME, PRODUCT_ID, UNIT_PRICE) VALUES (?, ?, ?, ?, ?, ?)', [orderId, quantity, volume, product, pid, unitPrice], (err) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve();
+                                }
+                            });
+                        });
+                    }
+
+                    db.commit((err) => {
                         if (err) {
                             throw err;
                         }
-                        db.commit((err) => {
-                            if (err) {
-                                throw err;
-                            }
-                            resolve({ message: 'Order placed successfully', orderId });
-                        });
+                        resolve({ message: 'Order placed successfully', orderId });
                     });
                 });
             });
@@ -63,29 +77,23 @@ export const addFullOrder = async (category, product, quantity, volume, retailer
     });
 };
 
-export const getOrderPreviewDetails = async () => {
-    console.log("se");
+
+const getRetailerId = async (userId) => {
     return new Promise((resolve, reject) => {
         try {
-            const query = `
-                SELECT order_details.PRODUCT_ID, order_details.PRODUCT_NAME, order_details.VOLUME, order_details.QUANTITY, order_details.UNIT_PRICE, order_.TOTAL_VALUE
-                FROM order_
-                INNER JOIN order_details ON order_.ORDER_ID = order_details.ORDER_ID
-            `;
-            db.query(query, (error, rows) => {
+            console.log(userId);
+            const query = `SELECT RETAILER_ID FROM retailer WHERE USER_ID = ?`;
+            db.query(query, [userId], (error, rows) => {
                 if (error) {
                     console.error('Error executing query:', error);
                     reject(error);
                 } else {
-                    const orders = rows.map (row => ({
-                        productid: row.PRODUCT_ID,
-                        productname: row.PRODUCT_NAME,
-                        quantity: row.QUANTITY,
-                        subtotal: row.TOTAL_VALUE,
-                        unitprice: row.UNIT_PRICE,
-                        volume: row.VOLUME
-                    }))
-                    resolve(orders);
+                    if (rows.length > 0) {
+                        console.log("rr "+rows[0].RETAILER_ID);
+                        resolve(rows[0].RETAILER_ID);
+                    } else {
+                        reject(new Error('Retailer not found'));
+                    }
                 }
             });
         } catch (error) {
@@ -93,7 +101,8 @@ export const getOrderPreviewDetails = async () => {
             reject(error);
         }
     });
-};
+}
+
 
 
 
