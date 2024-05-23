@@ -16,6 +16,7 @@ function DeliverySchedule() {
   const fetchDetails = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/order/details");
+      console.log(res);
       setDetails(res.data);
       setFilteredDetails(res.data); // Initialize filteredDetails with all details
     } catch (err) {

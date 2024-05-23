@@ -1,4 +1,5 @@
 import {db } from '../.env';
+import bcrypt from 'bcrypt';
 
 export const getAllRetail = () => {
     return new Promise ( (resolve,reject) => {
