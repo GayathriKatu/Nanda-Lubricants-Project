@@ -1,5 +1,7 @@
 // App.js
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import './App.css';
 import Home from './home';
 import Login from './login';
@@ -12,9 +14,6 @@ import DeliverySchedule from './pages/DeliverySchedule';
 import OrderPreview from './pages/OrderPreview';
 import MainShop from './pages/MainShop';
 import OrderPopup from './Components/OrderPopup';
-import UpdateInventory from './Components/UpdateInventory';
-import InquiryDisplay from './pages/InquiryDisplay';
-
 
 
 
@@ -46,14 +45,11 @@ function App() {
           <Route path='/orderpreview' element={<OrderPreview />} />
           <Route path='/mainshop' element={<MainShop />} />
           <Route path='/orderpopup' element={<OrderPopup />} />
-          <Route path='/updateinventory' element={<UpdateInventory />} />
-          <Route path='/inquirydisplay' element={<InquiryDisplay />} />
 
-
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
