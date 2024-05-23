@@ -23,38 +23,29 @@ function Shop() {
     };
     
     const saveAdd = async (data) => {
-        console.log(data);
+        setTableRows((prevTableRows) => [...prevTableRows, data]);
+    };
+    
+    const placeOrder = async() => {
         try {
-            const res = await axios.post("http://localhost:8000/api/order/addFullOrder", data);
+            const res = await axios.post("http://localhost:8000/api/order/addFullOrder", tableRows);
             if (res.status === 200) {
                 reset();
-                fetchRecords();
                 console.log("Added Success");
+                navigate('orderpopup');
             }
         } catch (err) {
             console.log(err);
         }
-    };
-
-    const fetchRecords = async () => {
-        try {
-            const res = await axios.get("http://localhost:8000/api/order/previewDetails");
-            if (res.status === 200) {
-                setTableRows(res.data)
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    }
 
     useEffect(() => {
-        fetchRecords();
         fetchDetails();
     }, []);
 
     useEffect(() => {
         if (cookies.user_id) {
-            setValue('retailer', cookies.user_id);
+            setValue('user', cookies.user_id);
         }
     }, [cookies.user_id]);
 
@@ -146,7 +137,7 @@ function Shop() {
                                 {errors.volume && <p className="text-red-500">{errors.volume.message}</p>}
                             </div>
                             <div className="flex justify-end mt-4">
-                                <input type='hidden' {...register('retailer')} />
+                                <input type='hidden' {...register('user')} />
                                 <input type='hidden' {...register('unitPrice')} />
                                 <input type='hidden' {...register('pid')} />
                                 <PrimaryButton text="Add" type="submit" />
@@ -158,7 +149,7 @@ function Shop() {
                     </div>
                 </div>
                 <div className="mt-4 flex justify-end">
-                    <PrimaryButton text="Place Order" onClick={() => navigate("/orderpopup")} />
+                    <PrimaryButton text="Place Order" onClick={placeOrder} />
                 </div>
             </div>
         </div>

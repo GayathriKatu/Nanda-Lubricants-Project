@@ -11,12 +11,12 @@ const LoginPage = () => {
 
     const login = async (data) => {
         try {
-            const res = await axios.post('http://localhost:8000/api/retailer/login', data);
+            const res = await axios.post('http://localhost:8000/api/user/login', data);
             if (res.status === 200) {
-                document.cookie = `user_id=${res.data.user}; max-age=${6 * 60 * 60}; path=/`;
-                document.cookie = `user_type=${res.data.name}; max-age=${6 * 60 * 60}; path=/`;
+                document.cookie = `user_id=${res.data.user}; max-age=${30*60}; path=/`;
+                document.cookie = `user_type=${res.data.name}; max-age=${30*60}; path=/`;
                 reset();
-                navigate('/shop');
+                navigate('/mainshop');
             }
         } catch (error) {
             console.error('Login error:', error.message);

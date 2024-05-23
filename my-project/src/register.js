@@ -3,25 +3,18 @@ import { useForm } from 'react-hook-form'
 import BankDetailsPopup from './BankPopup';
 import PrimaryButton from './Components/PrimaryButton';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegisterPage = () => {
     const { register, reset, handleSubmit } = useForm();
-    const [shopName, setShopName] = useState('');
-    const [address, setAddress] = useState('');
-    const [route, setRoute] = useState('');
-    const [contactNumber, setContactNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [bankDetails, setBankDetails] = useState({ bankName: '', accountName: '', accountNumber: '' });
 
     const saveAdd = async (data) => {
         try {
             const res = await axios.post('http://localhost:8000/api/retailer/register', data);
-            console.log(res);
             if (res.status === 200) {
                 reset({
                     shopName: '',
@@ -33,6 +26,7 @@ const RegisterPage = () => {
                     password: '',
                     confirmPassword: ''
                 });
+                navigate('/login');
             }
         } catch (error) {
             console.error('Registration error:', error.message);

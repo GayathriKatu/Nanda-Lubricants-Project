@@ -4,8 +4,7 @@ import PrimaryButton from '../Components/PrimaryButton';
 
 const PreviewComponent = ({ tableRows }) => {
   // Calculate the total
-  const total = tableRows.reduce((acc, curr) => acc + parseFloat(curr.subtotal), 0).toFixed(2);
-  
+  const total = tableRows.reduce((acc, row) => acc + parseFloat(row.quantity * row.unitPrice), 0).toFixed(2);
 
   return (
     <div className="bg-gray-800 h-screen">
@@ -25,12 +24,12 @@ const PreviewComponent = ({ tableRows }) => {
           <tbody>
             {tableRows.map((row, index) => (
               <tr key={index}>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.productid}</td>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.productname}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.pid}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.product}</td>
                 <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.volume}</td>
                 <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.quantity}</td>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.unitprice}</td>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800 text-right">{row.subtotal}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.unitPrice}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800 text-right">{row.quantity * row.unitPrice}</td>
               </tr>
             ))}
             <tr>

@@ -138,7 +138,7 @@ function MainShop() {
          
 
         {details.map((detail, index) => (
-          <div className="flex w-[21rem] shrink-0 ">
+          <div className="flex w-[21rem] shrink-0" key={index}>
             <ProductComponent cardContent={detail} index={index}/>
             
           </div>
