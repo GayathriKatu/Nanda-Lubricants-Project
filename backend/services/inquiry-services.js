@@ -14,3 +14,27 @@ export const AddinquiryService = (orderId, description) => {
     });
   });
 }
+
+export const getAllInquiry = () => {
+  return new Promise ( (resolve,reject) => {
+      
+      const q = `SELECT INQUIRY_ID, ORDER_ID, I_DESCRIPTION, INQUIRY_DATE FROM inquiry`;
+      
+      db.query ( q,(err,data) => {
+          if(err){
+              reject(err);
+          }else{
+              
+              const inquiry = data.map (item => ({
+                  inquiryId : item.INQUIRY_ID,
+                  orderId : item. ORDER_ID,
+                  description : item.I_DESCRIPTION,
+                  inquiryDate : item.INQUIRY_DATE
+              }))
+              resolve( inquiry );
+              
+          }
+      })
+
+  })
+}
