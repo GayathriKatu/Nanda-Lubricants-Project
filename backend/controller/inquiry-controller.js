@@ -1,5 +1,5 @@
 // controller/inquiry-controller.js
-import { AddinquiryService } from '../services/inquiry-services.js';
+import { AddinquiryService, getAllInquiry } from '../services/inquiry-services.js';
 
 export const Addinquiry = async (req, res) => {
   const { orderId, description } = req.body;
@@ -14,5 +14,16 @@ export const Addinquiry = async (req, res) => {
     } else {
       return res.status(500).json(err.message);
     }
+  }
+}
+
+export const inquiryDetails = async (req,res) => {
+  try{
+   
+   const data = await getAllInquiry();
+   res.json(data);
+   
+  }catch(err){
+      return res.status(500).json(err.message);
   }
 }
