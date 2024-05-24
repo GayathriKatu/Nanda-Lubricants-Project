@@ -14,7 +14,7 @@ function StaffCard({ cardContent, index }) {
       <div className="flex flex-grow p-4 justify-between">
         <div className="flex flex-col w-1/4 pr-4">
           <p className="text-white text-base font-bold mb-2">Username</p>
-          <p className="text-white text-base mb-2">{cardContent.username}</p>
+          <p className="text-white text-base mb-2">{cardContent.userName}</p>
         </div>
         <div className="flex flex-col w-1/4 pr-4">
           <p className="text-white text-base font-bold mb-2">Full Name</p>
@@ -22,11 +22,11 @@ function StaffCard({ cardContent, index }) {
         </div>
         <div className="flex flex-col w-1/4 pr-4">
           <p className="text-white text-base font-bold mb-2">Contact Number</p>
-          <p className="text-white text-base mb-2">{cardContent.contact}</p>
+          <p className="text-white text-base mb-2">{cardContent.contactNo}</p>
         </div>
         <div className="flex items-center">
           <div className='mr-2'>
-            <PrimaryButton text="Update" onClick={() => navigate("/updatestaff")} />
+            <PrimaryButton text="Update" onClick={() => navigate("/updatestaff", { state: { cardContent } })} />
           </div>
           <div>
             <PrimaryButton text="Delete" onClick={() => handleDelete(cardContent.staffId)} />

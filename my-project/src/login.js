@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
     const { register, handleSubmit, reset } = useForm();
     const navigate = useNavigate();
-
+    
     const login = async (data) => {
         try {
             const res = await axios.post('http://localhost:8000/api/user/login', data);
@@ -16,13 +16,17 @@ const LoginPage = () => {
                 document.cookie = `user_id=${res.data.user}; max-age=${30*60}; path=/`;
                 document.cookie = `user_type=${res.data.name}; max-age=${30*60}; path=/`;
                 reset();
-                navigate('/mainshop');
+                if (res.data.name === 'Admin') {
+                    navigate('/orderpreview');
+                } else {
+                    navigate('/mainShop');
+                }
             }
         } catch (error) {
             console.error('Login error:', error.message);
         }
     };
-
+    
     return (
         <div className="flex">
             <div className="w-1/3 bg-white flex items-center justify-center"> {/* Center image */}

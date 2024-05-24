@@ -9,7 +9,7 @@ import { orderRoutes } from './routes/order-router.js';
 import { orderDRoutes } from './routes/orderD-router.js';
 import { stockRoutes } from './routes/stock-router.js';
 import { inquiryRoutes } from './routes/inquiry-router.js';
-
+import { staffRoutes } from './routes/staff-router.js';
 
 
 const app = express();
@@ -23,21 +23,17 @@ db.connect( (err) => {
         return;
     }
     console.log('db working');
-})
+});
 
-//meken mokkd wenne
-app.use('/api/category', categoryRoutes)
-app.use('/api/products', productsRoutes)
-app.use('/api/user', userRoutes)
-app.use('/api/retailer', retailerRoutes)
-app.use('/api/order', orderRoutes)
-app.use('/api/orderD', orderDRoutes)
-app.use('/api/stock', stockRoutes)
-app.use('/api/inquiry', inquiryRoutes)
-
-
-
-
+app.use('/api/category', categoryRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/retailer', retailerRoutes);
+app.use('/api/order', orderRoutes);
+app.use('/api/orderD', orderDRoutes);
+app.use('/api/stock', stockRoutes);
+app.use('/api/inquiry', inquiryRoutes);
+app.use('/api/staff', staffRoutes);
 
 app.listen(PORT, () => {
     console.log(`backend is working on PORT ${PORT}`);

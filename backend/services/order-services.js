@@ -20,9 +20,8 @@ export const getAllOrder = () => {
                 }))
                 resolve(delivery);
             }
-        })
-
-    })
+        });
+    });
 }
 
 export const addFullOrder = async (orderDetails) => {
@@ -50,11 +49,16 @@ export const addFullOrder = async (orderDetails) => {
                     for (const detail of orderDetails) {
                         const { quantity, volume, product, pid, unitPrice } = detail;
                         await new Promise((resolve, reject) => {
-                            db.query('INSERT INTO order_details (ORDER_ID, QUANTITY, VOLUME, PRODUCT_NAME, PRODUCT_ID, UNIT_PRICE) VALUES (?, ?, ?, ?, ?, ?)', [orderId, quantity, volume, product, pid, unitPrice], (err) => {
+                            db.query('INSERT INTO order_details (ORDER_ID, QUANTITY, VOLUME, PRODUCT_NAME, PRODUCT_ID, UNIT_PRICE) VALUES (?, ?, ?, ?, ?, ?)', [orderId, quantity, volume, product, pid, unitPrice], async (err) => {
                                 if (err) {
                                     reject(err);
                                 } else {
-                                    resolve();
+                                    try {
+                                        await updateStockQuantity(product, quantity);
+                                        resolve();
+                                    } catch (updateErr) {
+                                        reject(updateErr);
+                                    }
                                 }
                             });
                         });
@@ -77,6 +81,17 @@ export const addFullOrder = async (orderDetails) => {
     });
 };
 
+const updateStockQuantity = async (productName, orderedQuantity) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE stock SET QUANTITY = QUANTITY - ? WHERE PRODUCT_NAME = ?', [orderedQuantity, productName], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
 
 const getRetailerId = async (userId) => {
     return new Promise((resolve, reject) => {
@@ -102,6 +117,7 @@ const getRetailerId = async (userId) => {
         }
     });
 }
+
 
 
 

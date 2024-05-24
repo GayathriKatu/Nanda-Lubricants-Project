@@ -21,12 +21,16 @@ import StaffDetails from './pages/StaffDetails';
 import UpdateStaff from './Components/UpdateStaff';
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['user_id']);
+    const [cookies, setCookie, removeCookie] = useCookies(['user_id','user_type']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         if (cookies.user_id) {
             setIsLoggedIn(true);
+        }
+        if (cookies.user_type === 'Admin') {
+            setIsAdmin(true);
         }
     }, [cookies]);
 
@@ -42,6 +46,8 @@ function App() {
                 </header>
                 <nav className="navigation">
                     <Link to='/' className="nav-link">Home</Link>
+                    {isAdmin && <Link to='/orderpreview' className="nav-link">Orders</Link>}
+                    {isAdmin && <Link to='/staffdetails' className="nav-link">Staff</Link>}
                     <Link to='/register' className="nav-link">Register</Link>
                     {!isLoggedIn && <Link to='/login' className="nav-link">Login</Link>}
                     <Link to='/shop' className="nav-link">Shop</Link>
