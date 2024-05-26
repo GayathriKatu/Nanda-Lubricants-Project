@@ -54,7 +54,7 @@ export const addFullOrder = async (orderDetails) => {
                                     reject(err);
                                 } else {
                                     try {
-                                        await updateStockQuantity(product, quantity);
+                                        await updateStockQuantity(product,volume, quantity);
                                         resolve();
                                     } catch (updateErr) {
                                         reject(updateErr);
@@ -81,9 +81,9 @@ export const addFullOrder = async (orderDetails) => {
     });
 };
 
-const updateStockQuantity = async (productName, orderedQuantity) => {
+const updateStockQuantity = async (productName,volume,orderedQuantity) => {
     return new Promise((resolve, reject) => {
-        db.query('UPDATE stock SET QUANTITY = QUANTITY - ? WHERE PRODUCT_NAME = ?', [orderedQuantity, productName], (err, result) => {
+        db.query('UPDATE stock SET QUANTITY = QUANTITY - ? WHERE PRODUCT_NAME = ? AND VOLUME = ?', [orderedQuantity, productName, volume], (err, result) => {
             if (err) {
                 reject(err);
             } else {

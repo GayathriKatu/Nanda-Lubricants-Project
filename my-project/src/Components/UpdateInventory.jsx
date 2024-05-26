@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import PrimaryButton from './PrimaryButton'; // Ensure you import the PrimaryButton component
+import { useLocation, useNavigate } from 'react-router-dom';
 
-function UpdateInventory({ onClose }) {
-  const [productName, setProductName] = useState('');
-  const [inStock, setInStock] = useState('');
-  const [volume, setVolume] = useState('');
-  const [price, setPrice] = useState('');
+function UpdateInventory() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { cardContent } = location.state || {};
+  const [product, setProduct] = useState({
+    productName: cardContent?.product || '',
+    quantity: '', // Initialize as empty string
+    volume: cardContent?.volume || '',
+    unitPrice: cardContent?.price || ''
+  });
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        onClose();
+        // You can add logic here if you need to handle the Escape key
       }
     };
 
@@ -17,71 +25,83 @@ function UpdateInventory({ onClose }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onClose]);
+  }, []);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    // For example, you can submit the data to a server
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put('http://localhost:8000/api/stock/update', product);
+      console.log('Product response:', response.data);
+      alert('Product details updated successfully');
+      navigate('/currentstock'); // Navigate back to current stock view after successful update
+    } catch (err) {
+      console.log('Error:', err.response ? err.response.data : err.message);
+      alert('An error occurred while updating product details');
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/currentstock'); // Navigate to current stock view on cancel
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
       <div className="bg-gray-800 p-6 rounded-lg shadow-md w-96 border border-white">
         <h2 className="text-2xl font-semibold mb-4 text-white">Update Product Details</h2>
-        <div className="mb-4">
-          <label htmlFor="productName" className="block text-sm font-medium text-white">Product Name</label>
-          <input
-            type="text"
-            id="productName"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="inStock" className="block text-sm font-medium text-white">In-Stock Quantity</label>
-          <input
-            type="text"
-            id="inStock"
-            value={inStock}
-            onChange={(e) => setInStock(e.target.value)}
-            className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="volume" className="block text-sm font-medium text-white">Volume</label>
-          <input
-            type="text"
-            id="volume"
-            value={volume}
-            onChange={(e) => setVolume(e.target.value)}
-            className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="price" className="block text-sm font-medium text-white">Price</label>
-          <input
-            type="text"
-            id="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-        <div className="flex justify-end">
-          <button
-            onClick={onClose}
-            className="bg-red-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 mr-2"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Save
-          </button>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="productName" className="block text-sm font-medium text-white">Product Name</label>
+            <input
+              type="text"
+              id="productName"
+              value={product.productName}
+              readOnly // Make this field read-only
+              className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="quantity" className="block text-sm font-medium text-white">Newly added Quantity</label>
+            <input
+              type="text"
+              id="quantity"
+              value={product.quantity}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="volume" className="block text-sm font-medium text-white">Volume</label>
+            <input
+              type="text"
+              id="volume"
+              value={product.volume}
+              readOnly // Make this field read-only
+              className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="unitPrice" className="block text-sm font-medium text-white">Price</label>
+            <input
+              type="text"
+              id="unitPrice"
+              value={product.unitPrice}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div className="flex justify-end space-x-4">
+            <PrimaryButton text="Cancel" type="button" onClick={handleCancel} />
+            <PrimaryButton text="Save" type="submit" />
+          </div>
+        </form>
       </div>
     </div>
   );

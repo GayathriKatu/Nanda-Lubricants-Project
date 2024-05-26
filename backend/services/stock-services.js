@@ -105,3 +105,26 @@ export const getReorderProducts = () => {
         });
     });
 };
+
+
+export const updateStockService = (quantity, unitPrice,productName, volume) => {
+    return new Promise((resolve, reject) => {
+        const q = `UPDATE stock     SET  UNIT_PRICE = ? WHERE PRODUCT_NAME = ? AND VOLUME = ?`;
+        db.query(q, [ unitPrice, productName, volume], (err, result) => {
+            if (err) {
+                reject(err);
+                return;
+            }      
+ 
+            const add = `UPDATE stock SET QUANTITY = QUANTITY + ? WHERE PRODUCT_NAME = ? AND VOLUME = ?`;
+            db.query(add, [quantity, productName, volume], (err, result)  => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve("Added");
+            })
+            
+        });
+    });
+}

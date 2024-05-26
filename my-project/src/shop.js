@@ -50,12 +50,11 @@ function Shop() {
     }, [cookies.user_id]);
 
     const volumeOptions = [
-        '100 ml',
-        '200 ml',
-        '500 ml',
-        '1 liter',
-        '2 liters',
-        '5 liters'
+        '1 L',
+        '5 L',
+        '20 L',
+        '210 L'
+        
     ];
 
     const categoryOptions = [

@@ -46,7 +46,7 @@ function App() {
                 </header>
                 <nav className="navigation">
                     <Link to='/' className="nav-link">Home</Link>
-                    {isAdmin && <Link to='/orderpreview' className="nav-link">Orders</Link>}
+                    {isAdmin && <Link to='/currentstock' className="nav-link">Stock</Link>}
                     {isAdmin && <Link to='/staffdetails' className="nav-link">Staff</Link>}
                     <Link to='/register' className="nav-link">Register</Link>
                     {!isLoggedIn && <Link to='/login' className="nav-link">Login</Link>}

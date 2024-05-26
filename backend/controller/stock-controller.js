@@ -1,5 +1,7 @@
 import {getAllStock, getReorderProducts} from '../services/stock-services.js';
-import { deleteStock , AddstockService, getOutofStock } from '../services/stock-services.js';
+import { deleteStock , 
+         AddstockService, getOutofStock,
+         updateStockService } from '../services/stock-services.js';
 
 export const stockDetails = async (req,res) => {
     try{
@@ -59,3 +61,13 @@ export const reOrder = async (req,res) => {
     }
 }
 
+export const updateStock = async (req,res) => {
+    const {quantity, unitPrice,productName, volume} = req.body;
+    try{
+        const data = await updateStockService(quantity, unitPrice,productName, volume);
+        return res.status(200).json(data);
+
+    
+}catch(err){
+    return res.status(500).json(err.message);
+}}
