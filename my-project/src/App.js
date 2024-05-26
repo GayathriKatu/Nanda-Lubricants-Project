@@ -7,7 +7,6 @@ import Home from './home';
 import Login from './login';
 import Register from './register';
 import Shop from './shop';
-import StockUpdate from './stockUpdate';
 import logo from './Images/NandaLogo.png';
 import CurrentStock from './pages/CurrentStock';
 import DeliverySchedule from './pages/DeliverySchedule';
@@ -19,9 +18,10 @@ import UpdateInventory from './Components/UpdateInventory';
 import InquiryDisplay from './pages/InquiryDisplay';
 import StaffDetails from './pages/StaffDetails';
 import UpdateStaff from './Components/UpdateStaff';
+import { FaFacebook } from 'react-icons/fa'; // Importing the Facebook icon
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['user_id','user_type']);
+    const [cookies, setCookie, removeCookie] = useCookies(['user_id', 'user_type']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
 
@@ -37,14 +37,22 @@ function App() {
     return (
         <BrowserRouter>
             <div className="app-container">
-                <header className="ribbon">
-                    <div className="logo">
-                        <img src={logo} alt="Nanda Logo" /></div>
-                    <div className="company-info">
-                        <p>Powered By <br></br> Laughs Lubricants</p>
+            <header className="ribbon flex justify-between items-center p-2 bg-gray-800 text-white">
+                    <div className="logo flex items-center">
+                        <img src={logo} alt="Nanda Logo" className="h-10 mr-2" />
+                        <div className="company-info">
+                            <p>Powered By <br /> Laughs Lubricants</p>
+                        </div>
+                    </div>
+                    <div className="contact-info flex items-center space-x-4 text-sm">
+                        <p>+94 371933455</p>
+                        <p>nandalubricants@gmail.com</p>
+                        <a href="https://www.facebook.com/nandagroup.lk?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="text-white">
+                            <FaFacebook size={24} />
+                        </a>
                     </div>
                 </header>
-                <nav className="navigation">
+                <nav className="navigation flex justify-end p-2">
                     <Link to='/' className="nav-link">Home</Link>
                     {isAdmin && <Link to='/currentstock' className="nav-link">Stock</Link>}
                     {isAdmin && <Link to='/staffdetails' className="nav-link">Staff</Link>}
@@ -56,7 +64,7 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/login' element={<Login />} />
-                    <Route path="/shop" element={<PrivateRoute element={<Shop/>} />} />
+                    <Route path="/shop" element={<PrivateRoute element={<Shop />} />} />
                     <Route path='/currentstock' element={<CurrentStock />} />
                     <Route path='/deliveryschedule' element={<DeliverySchedule />} />
                     <Route path='/orderpreview' element={<OrderPreview />} />
@@ -66,8 +74,6 @@ function App() {
                     <Route path='/inquirydisplay' element={<InquiryDisplay />} />
                     <Route path='/staffdetails' element={<StaffDetails />} />
                     <Route path='/updatestaff' element={<UpdateStaff />} />
-                    
-
                 </Routes>
             </div>
         </BrowserRouter>
