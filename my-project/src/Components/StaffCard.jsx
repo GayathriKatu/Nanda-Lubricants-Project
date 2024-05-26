@@ -1,13 +1,24 @@
 import React from 'react';
 import PrimaryButton from './PrimaryButton';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function StaffCard({ cardContent, index }) {
+
+  const handleDelete = async (staffId) => {
+    console.log(staffId);
+    try {
+      await axios.delete(`http://localhost:8000/api/staff/delete/${staffId}`);
+      // Optionally, update state or perform any other action after successful deletion
+      // You may want to refetch the data after deletion to update the UI
+    } catch (error) {
+      console.error('Error deleting staff:', error);
+    }
+  };
+
   const navigate = useNavigate();
 
-  const handleDelete = (staffId) => {
-    console.log(staffId);
-  };
+  
 
   return (
     <div className="w-full bg-white bg-opacity-10 rounded-lg shadow-md overflow-hidden items-center px-5 mb-2" index={index}>

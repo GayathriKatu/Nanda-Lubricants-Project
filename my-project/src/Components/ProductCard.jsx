@@ -28,12 +28,12 @@ function ProductCard({ cardContent, index }) {
           <p className="text-white text-base font-bold mb-2">{cardContent.product}</p>
         </div>
         <div className="flex flex-col w-1/4 pr-4">
-          <p className="text-white text-base font-bold mb-2">In Stock</p>
-          <p className="text-white text-base mb-2">{cardContent.stock}</p>
-        </div>
-        <div className="flex flex-col w-1/4 pr-4">
           <p className="text-white text-base font-bold mb-2">Volume</p>
           <p className="text-white text-base mb-2">{cardContent.volume}</p>
+        </div>
+        <div className="flex flex-col w-1/4 pr-4">
+          <p className="text-white text-base font-bold mb-2">In Stock</p>
+          <p className="text-white text-base mb-2">{cardContent.stock}</p>
         </div>
         <div className="flex flex-col w-1/4 pr-4">
           <p className="text-white text-base font-bold mb-2">Price (Rs.)</p>

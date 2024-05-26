@@ -143,3 +143,16 @@ export const UpdateStaffAndUser = async(data) => {
         });
     });
 };
+
+export const deleteStaff = (staffId) => {
+    return new Promise((resolve, reject) => {
+        const q = `DELETE FROM staff WHERE STAFF_ID = ?`;
+        db.query(q, [staffId], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+};
