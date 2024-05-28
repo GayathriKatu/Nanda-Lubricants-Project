@@ -1,5 +1,8 @@
+// DeliverySchedule.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import DateTimePicker from "../Components/DateTimePicker";
 import PrimaryButton from "../Components/PrimaryButton";
 import DropDown from "../Components/DropDown";
@@ -54,6 +57,25 @@ function DeliverySchedule() {
     setFilteredDetails(filteredByDate);
   };
 
+  // Generate PDF
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const tableData = filteredDetails.map((detail) => [
+      detail.orderId,
+      detail.shopName,
+      detail.routeName,
+      detail.datePlaced,
+      // Add more fields as needed
+    ]);
+
+    doc.autoTable({
+      head: [["Order ID", "Shop Name", "Route Name", "Date Placed"]],
+      body: tableData,
+    });
+
+    doc.save("delivery_schedule.pdf");
+  };
+
   return (
     <div className="flex flex-col w-screen bg-gray-800 text-white px-12 py-4">
       <div className="flex justify-between items-center">
@@ -62,7 +84,7 @@ function DeliverySchedule() {
         </div>
         <div className="flex gap-4 items-center">
           <div>
-            <PrimaryButton text="PRINT" />
+            <PrimaryButton text="PRINT" onClick={generatePDF} />
           </div>
         </div>
       </div>

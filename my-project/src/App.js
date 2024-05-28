@@ -44,7 +44,7 @@ function App() {
                             <p>Powered By <br /> Laughs Lubricants</p>
                         </div>
                     </div>
-                    <div className="contact-info flex items-center space-x-4 text-sm">
+                    <div className="contact-info flex items-center space-x-4 text-xs">
                         <p>+94 371933455</p>
                         <p>nandalubricants@gmail.com</p>
                         <a href="https://www.facebook.com/nandagroup.lk?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="text-white">

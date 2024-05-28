@@ -1,28 +1,72 @@
 import {db } from '../.env';
 
+// export const getAllOrder = () => {
+//     return new Promise ( (resolve,reject) => {
+        
+//         const q = `SELECT o.ORDER_ID, o.DATE_PLACED, o.TOTAL_VALUE, r.SHOP_NAME, r.ROUTE_NAME
+//         FROM order_ o
+//         JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID `;
+        
+//         db.query ( q,(err,data) => {
+//             if(err){
+//                 reject(err);
+//             }else{
+//                 const delivery = data.map (item => ({
+//                     orderId: item.ORDER_ID,
+//                     datePlaced: item.DATE_PLACED,
+//                     totalPrice: item.TOTAL_VALUE,
+//                     shopName: item.SHOP_NAME,
+//                     routeName: item.ROUTE_NAME
+//                 }))
+//                 resolve(delivery);
+//             }
+//         });
+//     });
+// }
+
 export const getAllOrder = () => {
-    return new Promise ( (resolve,reject) => {
-        
-        const q = `SELECT o.ORDER_ID, o.DATE_PLACED, o.TOTAL_VALUE, r.SHOP_NAME, r.ROUTE_NAME
-        FROM order_ o
-        JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID `;
-        
-        db.query ( q,(err,data) => {
-            if(err){
+    return new Promise((resolve, reject) => {
+        const q = `
+            SELECT o.ORDER_ID, o.DATE_PLACED, o.TOTAL_VALUE, r.SHOP_NAME, r.ROUTE_NAME, 
+                   od.ORDER_DETAIL_ID, od.PRODUCT_NAME, od.VOLUME, od.QUANTITY
+            FROM order_ o
+            JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID
+            LEFT JOIN order_details od ON o.ORDER_ID = od.ORDER_ID
+        `;
+
+        db.query(q, (err, data) => {
+            if (err) {
                 reject(err);
-            }else{
-                const delivery = data.map (item => ({
-                    orderId: item.ORDER_ID,
-                    datePlaced: item.DATE_PLACED,
-                    totalPrice: item.TOTAL_VALUE,
-                    shopName: item.SHOP_NAME,
-                    routeName: item.ROUTE_NAME
-                }))
-                resolve(delivery);
+            } else {
+                const orders = {};
+
+                data.forEach(item => {
+                    if (!orders[item.ORDER_ID]) {
+                        orders[item.ORDER_ID] = {
+                            orderId: item.ORDER_ID,
+                            datePlaced: item.DATE_PLACED,
+                            totalPrice: item.TOTAL_VALUE,
+                            shopName: item.SHOP_NAME,
+                            routeName: item.ROUTE_NAME,
+                            details: []
+                        };
+                    }
+                    if (item.ORDER_DETAIL_ID) {
+                        orders[item.ORDER_ID].details.push({
+                            orderDetailId: item.ORDER_DETAIL_ID,
+                            productName: item.PRODUCT_NAME,
+                            volume: item.VOLUME,
+                            quantity: item.QUANTITY
+                        });
+                    }
+                });
+
+                resolve(Object.values(orders));
             }
         });
     });
-}
+};
+
 
 export const addFullOrder = async (orderDetails) => {
     const datePlaced = new Date().toISOString().split('T')[0];
