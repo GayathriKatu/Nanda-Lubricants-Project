@@ -26,7 +26,7 @@ function Shop() {
         setTableRows((prevTableRows) => [...prevTableRows, data]);
     };
     
-    const placeOrder = async() => {
+    const placeOrder = async () => {
         try {
             const res = await axios.post("http://localhost:8000/api/order/addFullOrder", tableRows);
             if (res.status === 200) {
@@ -37,7 +37,7 @@ function Shop() {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     useEffect(() => {
         fetchDetails();
@@ -54,7 +54,6 @@ function Shop() {
         '5 L',
         '20 L',
         '210 L'
-        
     ];
 
     const categoryOptions = [
@@ -116,7 +115,13 @@ function Shop() {
                                 <label>Quantity:</label>
                                 <input
                                     type="text"
-                                    {...register('quantity', { required: 'Quantity is required' })}
+                                    {...register('quantity', {
+                                        required: 'Quantity is required',
+                                        pattern: {
+                                            value: /^[0-9]+$/,
+                                            message: 'Quantity should be a non-negative integer'
+                                        }
+                                    })}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
                                 />
                                 {errors.quantity && <p className="text-red-500">{errors.quantity.message}</p>}
