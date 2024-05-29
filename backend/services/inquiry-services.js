@@ -15,26 +15,52 @@ export const AddinquiryService = (orderId, description) => {
   });
 }
 
-export const getAllInquiry = () => {
-  return new Promise ( (resolve,reject) => {
+// export const getAllInquiry = () => {
+//   return new Promise ( (resolve,reject) => {
       
-      const q = `SELECT INQUIRY_ID, ORDER_ID, I_DESCRIPTION, INQUIRY_DATE FROM inquiry`;
+//       const q = `SELECT INQUIRY_ID, ORDER_ID, I_DESCRIPTION, INQUIRY_DATE FROM inquiry`;
       
-      db.query ( q,(err,data) => {
-          if(err){
-              reject(err);
-          }else{
+//       db.query ( q,(err,data) => {
+//           if(err){
+//               reject(err);
+//           }else{
               
-              const inquiry = data.map (item => ({
-                  inquiryId : item.INQUIRY_ID,
-                  orderId : item. ORDER_ID,
-                  description : item.I_DESCRIPTION,
-                  inquiryDate : item.INQUIRY_DATE
-              }))
-              resolve( inquiry );
+//               const inquiry = data.map (item => ({
+//                   inquiryId : item.INQUIRY_ID,
+//                   orderId : item. ORDER_ID,
+//                   description : item.I_DESCRIPTION,
+//                   inquiryDate : item.INQUIRY_DATE
+//               }))
+//               resolve( inquiry );
               
-          }
-      })
+//           }
+//       })
 
-  })
+//   })
+// }
+
+export const getAllInquiry = () => {
+  return new Promise((resolve, reject) => {
+    const q = `SELECT INQUIRY_ID, ORDER_ID, I_DESCRIPTION, INQUIRY_DATE FROM inquiry`;
+
+    db.query(q, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        // Get today's date
+        const today = new Date();
+        const formattedToday = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+        const inquiry = data.map(item => ({
+          inquiryId: item.INQUIRY_ID,
+          orderId: item.ORDER_ID,
+          description: item.I_DESCRIPTION,
+          inquiryDate: item.INQUIRY_DATE,
+          todayDate: formattedToday // Add today's date
+        }));
+
+        resolve(inquiry);
+      }
+    });
+  });
 }

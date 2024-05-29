@@ -65,11 +65,11 @@ function DeliverySchedule() {
       detail.shopName,
       detail.routeName,
       detail.datePlaced,
-      // Add more fields as needed
+      detail.totalPrice, // Add totalPrice to the table data
     ]);
 
     doc.autoTable({
-      head: [["Order ID", "Shop Name", "Route Name", "Date Placed"]],
+      head: [["Order ID", "Shop Name", "Route Name", "Date Placed", "Total Price(Rs)"]],
       body: tableData,
     });
 
@@ -84,7 +84,7 @@ function DeliverySchedule() {
         </div>
         <div className="flex gap-4 items-center">
           <div>
-            <PrimaryButton text="PRINT" onClick={generatePDF} />
+            <PrimaryButton text="Download PDF" onClick={generatePDF} />
           </div>
         </div>
       </div>

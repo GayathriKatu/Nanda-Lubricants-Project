@@ -59,11 +59,14 @@ function Shop() {
     const categoryOptions = [
         'Diesel',
         'Petrol',
-        'Motor Cycle',
-        'Three Wheeler',
-        'Car',
-        'Truck',
-        'Bus'
+        'Motor Cycle Oil',
+        'Three Wheeler Oil',
+        'UTT Oil',
+        'Outboard Oil',
+        'Greases',
+        'Industrial and Hydraulic Oil',
+        'Premium ECO Plus',
+        'Transmission Oil'
     ];
 
     return (

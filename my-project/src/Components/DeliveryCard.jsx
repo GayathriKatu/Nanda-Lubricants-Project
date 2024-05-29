@@ -27,7 +27,7 @@ function DeliveryCard({ cardContent, index }) {
           <p className="text-white text-base mb-2">{cardContent.datePlaced}</p>
         </div>
         <div className="flex flex-col w-1/5 pr-4">
-          <p className="text-white text-base font-bold mb-2">Total Price</p>
+          <p className="text-white text-base font-bold mb-2">Total Price (Rs.)</p>
           <p className="text-white text-base mb-2">{cardContent.totalPrice}</p>
         </div>
         <div className="flex items-center">
