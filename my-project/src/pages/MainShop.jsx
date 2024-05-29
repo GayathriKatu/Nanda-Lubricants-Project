@@ -3,7 +3,8 @@ import PrimaryButton from "../Components/PrimaryButton";
 import ProductComponent from "../Components/ProductComponent";
 import Inquiry from "./Inquiry"; // Import the inquiry popup component
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 // Overlay component
 function Overlay({ children, width = "full", height = "full" }) {
   return (
@@ -16,75 +17,6 @@ function Overlay({ children, width = "full", height = "full" }) {
 }
 
 function MainShop() {
-  // Mock data for product cards
-  // const products = [
-  //   {
-  //     productId: 'P001',
-  //     productName: 'Product 1',
-  //     category: 'Category 1',
-  //     description: 'Description of Product 1',
-  //     unitPrices: {
-  //       '1L': 10,
-  //       '2L': 20,
-  //       '3L': 30,
-  //       '4L': 40
-  //     }
-  //   },
-  //   {
-  //     productId: 'P001',
-  //     productName: 'Product 1',
-  //     category: 'Category 1',
-  //     description: 'Description of Product 1',
-  //     unitPrices: {
-  //       '1L': 10,
-  //       '2L': 20,
-  //       '3L': 30,
-  //       '4L': 40
-  //     }
-  //   },
-
-  //   {
-  //     productId: 'P001',
-  //     productName: 'Product 1',
-  //     category: 'Category 1',
-  //     description: 'Description of Product 1',
-  //     unitPrices: {
-  //       '1L': 10,
-  //       '2L': 20,
-  //       '3L': 30,
-  //       '4L': 40
-  //     }
-  //   },
-
-  //   {
-  //     productId: 'P001',
-  //     productName: 'Product 1',
-  //     category: 'Category 1',
-  //     description: 'Description of Product 1',
-  //     unitPrices: {
-  //       '1L': 10,
-  //       '2L': 20,
-  //       '3L': 30,
-  //       '4L': 40
-  //     }
-  //   },
-
-  //   {
-  //     productId: 'P001',
-  //     productName: 'Product 1',
-  //     category: 'Category 1',
-  //     description: 'Description of Product 1',
-  //     unitPrices: {
-  //       '1L': 10,
-  //       '2L': 20,
-  //       '3L': 30,
-  //       '4L': 40
-  //     }
-  //   },
-
-  //   // Add more products as needed
-  // ];
-
   // State to control the visibility of the inquiry popup
   const [showInquiry, setShowInquiry] = useState(false);
 
@@ -127,36 +59,19 @@ function MainShop() {
             <PrimaryButton text="+ Place an Inquiry" onClick={openInquiry} />
           </div>
           <div>
-            <PrimaryButton text="+ Place an Order" onClick={() => navigate("/shop")}/>
+            <PrimaryButton text="+ Place an Order" onClick={() => navigate("/shop")} />
           </div>
         </div>
       </div>
 
       <div className="flex w-full flex-wrap gap-4 mt-6">
-
-        
-         
-
         {details.map((detail, index) => (
           <div className="flex w-[21rem] shrink-0" key={index}>
-            <ProductComponent cardContent={detail} index={index}/>
-            
+            <ProductComponent cardContent={detail} index={index} />
           </div>
         ))}
-
-        {/* {products.map((product, index) => (
-          <ProductComponent
-            key={index}
-            productId={product.productId}
-            productName={product.productName}
-            category={product.category}
-            description={product.description}
-            unitPrices={product.unitPrices}
-          />
-        ))} */}
       </div>
 
-      {/* Render the inquiry popup conditionally based on the state */}
       {showInquiry && (
         <Overlay>
           <Inquiry onClose={closeInquiry} />
