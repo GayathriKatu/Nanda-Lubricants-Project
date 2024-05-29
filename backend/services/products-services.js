@@ -52,3 +52,33 @@ export const AddproductService = ( productId,productName,description,unitPrice, 
         })
     })
 }
+
+
+// export const AddproductService = (productId, productName, description, unitPrice, category) => {
+//     return new Promise((resolve, reject) => {
+//         // Query to check if the product name already exists
+//         const checkQuery = `SELECT * FROM products WHERE PRODUCT_NAME = ?`;
+
+//         db.query(checkQuery, [productName], (checkErr, checkData) => {
+//             if (checkErr) {
+//                 reject(checkErr);
+//             } else {
+//                 if (checkData.length > 0) {
+//                     // Product name already exists
+//                     reject(new Error('Product name already exists!'));
+//                 } else {
+//                     // Product name does not exist, proceed with the insertion
+//                     const insertQuery = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, UNIT_PRICE, CATEGORY_ID) VALUES (?, ?, ?, ?, ?)`;
+
+//                     db.query(insertQuery, [productId, productName, description, unitPrice, category], (insertErr, insertData) => {
+//                         if (insertErr) {
+//                             reject(insertErr);
+//                         } else {
+//                             resolve('Product added successfully!');
+//                         }
+//                     });
+//                 }
+//             }
+//         });
+//     });
+// };

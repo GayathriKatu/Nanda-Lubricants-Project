@@ -9,7 +9,7 @@ function UpdateStock({ onClose }) {
     productName: "",
     description: "",
     unitPrice: "",
-    category: "" // This will be used to store the CATEGORY_ID
+    category: "" 
   });
 
   const [stock, setStock] = useState({
@@ -19,7 +19,7 @@ function UpdateStock({ onClose }) {
     volume: ""
   });
 
-  const handleProductInputs = (e) => {
+   const handleProductInputs = (e) => {
     const { name, value } = e.target;
 
     setProduct(prev => ({
@@ -66,12 +66,20 @@ function UpdateStock({ onClose }) {
       const productRes = await axios.post('http://localhost:8000/api/products/add', product);
       console.log('Product response:', productRes.data);
 
+      
+    } catch (err) {
+      console.log('Error:', err.response ? err.response.data : err.message);
+    } 
+    try {
       // Submitting stock details
       const stockRes = await axios.post('http://localhost:8000/api/stock/add', stock);
       console.log('Stock response:', stockRes.data);
+      console.log(stock);
     } catch (err) {
       console.log('Error:', err.response ? err.response.data : err.message);
-    } finally {
+ 
+    }
+    finally {
       onClose();
     }
   };

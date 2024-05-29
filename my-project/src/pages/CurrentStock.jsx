@@ -14,8 +14,8 @@ function CurrentStock() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedSortBy, setSelectedSortBy] = useState('');
-  const [SelectedStockAlert, setSelectedStockAlert] = useState('');
-  const [SelectedCategory, setSelectedCategory] = useState('');
+  const [selectedStockAlert, setSelectedStockAlert] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [showUpdateStock, setShowUpdateStock] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -62,7 +62,7 @@ function CurrentStock() {
   }, []);
 
   useEffect(() => {
-    if (selectedSortBy === 'Re order') {
+    if (selectedSortBy === 'Re Order') {
       fetchReOrder();
     }
   }, [selectedSortBy]);
@@ -114,9 +114,9 @@ function CurrentStock() {
   const getFilteredData = () => {
     let filteredData = details;
 
-    if (selectedSortBy === 'Out of stock') {
+    if (selectedSortBy === 'Out of Stock') {
       filteredData = outOfStock;
-    } else if (selectedSortBy === 'Re order') {
+    } else if (selectedSortBy === 'Re Order') {
       filteredData = reorderProducts;
     }
 
