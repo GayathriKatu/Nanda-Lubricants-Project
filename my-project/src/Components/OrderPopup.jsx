@@ -1,12 +1,42 @@
 import React from 'react';
 import PrimaryButton from './PrimaryButton';
-import {useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-const OrderPopup = ({ onClose }) => {
-
+const OrderPopup = () => {
   const navigate = useNavigate();
-  const handleDownloadInvoice = () => {
-    // Logic for downloading invoice
+  const location = useLocation();
+  const { tableRows } = location.state; // Receive tableRows via location.state
+
+  const generatePDF = () => {
+    const total = tableRows.reduce((acc, row) => acc + parseFloat(row.quantity * row.unitPrice), 0).toFixed(2);
+    const doc = new jsPDF();
+    doc.text('Order Preview', 20, 10);
+
+    const tableColumn = ["Product ID", "Product Name", "Volume", "Quantity", "Unit Price", "SubTotal"];
+    const tableRowsData = [];
+
+    tableRows.forEach(row => {
+      const rowData = [
+        row.pid,
+        row.product,
+        row.volume,
+        row.quantity,
+        row.unitPrice,
+        (row.quantity * row.unitPrice).toFixed(2),
+      ];
+      tableRowsData.push(rowData);
+    });
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRowsData,
+      startY: 20,
+    });
+
+    doc.text(`Total: ${total}`, 20, doc.autoTable.previous.finalY + 10);
+    doc.save('order_preview.pdf');
   };
 
   return (
@@ -15,7 +45,7 @@ const OrderPopup = ({ onClose }) => {
         <h2 className="text-2xl font-semibold mb-6 text-white text-center">YOUR ORDER HAS PLACED!</h2>
         <div className="flex flex-col items-center space-y-4 w-full">
           {/* Button for downloading invoice */}
-          <PrimaryButton text="Download Invoice" onClick={handleDownloadInvoice} />
+          <PrimaryButton text="Download Invoice" onClick={generatePDF} />
           {/* Button for going back to menu */}
           <PrimaryButton text="Go Back to Menu" onClick={() => navigate("/")} />
         </div>

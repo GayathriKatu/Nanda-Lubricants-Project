@@ -34,7 +34,7 @@ function MainShop() {
 
   const fetchDetails = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/products/details");
+      const res = await axios.get("http://localhost:8000/api/products/mainshopdetails");
       setDetails(res.data);
       console.log(res.data);
     } catch (err) {

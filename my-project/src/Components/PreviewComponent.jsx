@@ -39,7 +39,7 @@ const PreviewComponent = ({ tableRows }) => {
   return (
     <div className="bg-gray-800 h-screen">
       <div className="bg-white bg-opacity-10 rounded-lg mx-auto max-w-screen-md p-4 ">
-        <p className="text-3xl text-white font-semibold mb-6">ORDER PREVIEW</p>
+        <p className="text-3xl text-white font-semibold mb-6">ORDER INVOICE</p>
         <table className="w-full border-collapse">
           <thead>
             <tr>
@@ -68,9 +68,7 @@ const PreviewComponent = ({ tableRows }) => {
             </tr>
           </tbody>
         </table>
-        <div className="mt-4 flex justify-end">
-          <PrimaryButton text="Download PDF" onClick={generatePDF} />
-        </div>
+        
       </div>
     </div>
   );

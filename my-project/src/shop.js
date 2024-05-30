@@ -32,7 +32,7 @@ function Shop() {
             if (res.status === 200) {
                 reset();
                 console.log("Added Success");
-                navigate('/orderpopup');
+                navigate('/orderpopup', { state: { tableRows } });
             }
         } catch (err) {
             console.log(err);
