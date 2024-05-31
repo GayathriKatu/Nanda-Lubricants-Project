@@ -128,3 +128,40 @@ export const updateStockService = (quantity, unitPrice,productName, volume) => {
         });
     });
 }
+
+//total instock
+export const getTotalStockCount = () => {
+    return new Promise((resolve, reject) => {
+      const q = `SELECT SUM(QUANTITY) AS totalStockCount FROM stock`;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          const totalStockCount = data[0].totalStockCount || 0;
+          resolve(totalStockCount);
+        }
+      });
+    });
+  };
+
+  //stock value
+  export const getTotalInventoryValue = () => {
+    return new Promise((resolve, reject) => {
+      const q = `
+        SELECT SUM(UNIT_PRICE * QUANTITY) AS totalInventoryValue
+        FROM stock
+      `;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          const totalInventoryValue = data[0].totalInventoryValue || 0;
+          resolve({ totalInventoryValue });
+        }
+      });
+    });
+  };
+  
+  

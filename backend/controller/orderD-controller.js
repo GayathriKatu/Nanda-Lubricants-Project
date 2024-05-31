@@ -1,4 +1,4 @@
-import {getAllOrderD, AddorderService} from '../services/orderD-services.js';
+import {getAllOrderD, AddorderService, getTop5BestSellingProducts} from '../services/orderD-services.js';
 
 export const orderDDetails = async (req,res) => {
     try{
@@ -25,3 +25,13 @@ export const AddOrder = async (req,res) => {
         }
     }
 }
+
+// top selling products
+export const Top5BestSellingProducts = async (req, res) => {
+    try {
+      const data = await getTop5BestSellingProducts();
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };

@@ -1,4 +1,4 @@
-import {getAllOrder,addFullOrder} from '../services/order-services.js';
+import {getAllOrder,addFullOrder, getTotalSalesThisMonth, getTop5Customers, getTop5Routes} from '../services/order-services.js';
 
 export const orderDetails = async (req,res) => {
     try{
@@ -24,3 +24,36 @@ export const AddFullOrder = async (req, res) => {
         }
     }
 };
+
+//Total Sales
+
+export const TotalSalesThisMonth = async (req, res) => {
+  try {
+    const totalSales = await getTotalSalesThisMonth();
+    res.json({ totalSales });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//best customers
+
+export const Top5Customers = async (req, res) => {
+    try {
+      const data = await getTop5Customers();
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+  //best routes
+
+  export const Top5Routes = async (req, res) => {
+    try {
+      const data = await getTop5Routes();
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };

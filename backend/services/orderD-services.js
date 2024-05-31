@@ -31,3 +31,28 @@ export const AddorderService = ( productName, quantity, volume ) => {
         })
     })
 }
+
+//best selling products
+
+export const getTop5BestSellingProducts = () => {
+    return new Promise((resolve, reject) => {
+        const q = `
+        SELECT MAX(PRODUCT_NAME) AS PRODUCT_NAME
+      FROM order_details
+      GROUP BY PRODUCT_ID
+      ORDER BY COUNT(PRODUCT_ID) DESC
+      LIMIT 5
+      `;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          const products = data.map(item => ({
+            productName: item.PRODUCT_NAME
+          }));
+          resolve(products);
+        }
+      });
+    });
+  };

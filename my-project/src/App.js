@@ -18,6 +18,7 @@ import UpdateInventory from './Components/UpdateInventory';
 import InquiryDisplay from './pages/InquiryDisplay';
 import StaffDetails from './pages/StaffDetails';
 import UpdateStaff from './Components/UpdateStaff';
+import AdminReports from './pages/AdminReports';
 import { FaFacebook } from 'react-icons/fa'; // Importing the Facebook icon
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
                     <Route path='/inquirydisplay' element={<InquiryDisplay />} />
                     <Route path='/staffdetails' element={<StaffDetails />} />
                     <Route path='/updatestaff' element={<UpdateStaff />} />
+                    <Route path='/adminreports' element={<AdminReports />} />
                 </Routes>
             </div>
         </BrowserRouter>

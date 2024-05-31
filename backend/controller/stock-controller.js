@@ -1,7 +1,7 @@
 import {getAllStock, getReorderProducts} from '../services/stock-services.js';
 import { deleteStock , 
          AddstockService, getOutofStock,
-         updateStockService } from '../services/stock-services.js';
+         updateStockService, getTotalStockCount, getTotalInventoryValue } from '../services/stock-services.js';
 
 export const stockDetails = async (req,res) => {
     try{
@@ -71,3 +71,24 @@ export const updateStock = async (req,res) => {
 }catch(err){
     return res.status(500).json(err.message);
 }}
+
+//total instock
+export const TotalStockCount = async (req, res) => {
+    try {
+      const totalStockCount = await getTotalStockCount();
+      res.json({ totalStockCount });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+  
+  //stock value
+  export const TotalInventoryValue = async (req, res) => {
+    try {
+      const data = await getTotalInventoryValue();
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+  

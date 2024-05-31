@@ -163,6 +163,86 @@ const getRetailerId = async (userId) => {
 }
 
 
+//Total sales
+
+export const getTotalSalesThisMonth = () => {
+  return new Promise((resolve, reject) => {
+    // Get the first day of the current month
+    const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const firstDayFormatted = firstDayOfMonth.toISOString().split('T')[0];
+
+    // Get the last day of the current month
+    const lastDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+    const lastDayFormatted = lastDayOfMonth.toISOString().split('T')[0];
+
+    const q = `SELECT SUM(TOTAL_VALUE) AS totalSales
+               FROM order_
+               WHERE DATE_PLACED >= ? AND DATE_PLACED <= ?`;
+
+    db.query(q, [firstDayFormatted, lastDayFormatted], (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        const totalSales = data[0]?.totalSales || 0;
+        resolve(totalSales);
+      }
+    });
+  });
+};
+
+//best customers
+
+export const getTop5Customers = () => {
+    return new Promise((resolve, reject) => {
+      const q = `
+        SELECT o.RETAILER_ID, COUNT(o.RETAILER_ID) AS orderCount, r.SHOP_NAME
+        FROM order_ o
+        INNER JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID
+        GROUP BY o.RETAILER_ID
+        ORDER BY orderCount DESC
+        LIMIT 5
+      `;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+            const customers = data.map (item => ({
+                retailerId : item.RETAILER_ID,
+                orderCount : item.orderCount,
+                shopName : item.SHOP_NAME
+            }))
+            resolve(customers);
+        }
+      });
+    });
+};
+
+
+// top routes
+
+export const getTop5Routes = () => {
+  return new Promise((resolve, reject) => {
+    const q = `
+      SELECT DISTINCT r.ROUTE_NAME
+      FROM order_ o
+      INNER JOIN retailer r ON o.RETAILER_ID = r.RETAILER_ID
+      LIMIT 5
+    `;
+
+    db.query(q, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        const routes = data.map(item => ({
+          routeName: item.ROUTE_NAME
+        }));
+        resolve(routes);
+      }
+    });
+  });
+};
+
 
 
 
