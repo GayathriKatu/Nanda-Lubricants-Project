@@ -96,13 +96,13 @@ const RegisterPage = () => {
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
                     </div>
-                    <button
+                    {/* <button
                         type="button"
                         onClick={openPopup}
                         className="bg-[#D4C5A9] text-black font-medium py-2 px-4 rounded-md hover:bg-[#b3a081] transition duration-300 mb-8"
                     >
                         Enter Bank Details
-                    </button>
+                    </button> */}
 
                 </form>
             </div>
