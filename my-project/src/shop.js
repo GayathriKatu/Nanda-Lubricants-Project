@@ -80,7 +80,7 @@ function Shop() {
                         <h2 className="text-xl font-semibold mb-4">Order Details</h2>
                         <form onSubmit={handleSubmit(saveAdd)}>
                             <div>
-                                <label>Category:</label>
+                                {/* <label>Category:</label>
                                 <select
                                     {...register('category', { required: 'Category is required' })}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
@@ -92,7 +92,7 @@ function Shop() {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.category && <p className="text-red-500">{errors.category.message}</p>}
+                                {errors.category && <p className="text-red-500">{errors.category.message}</p>} */}
 
                                 <label>Product:</label>
                                 <select
