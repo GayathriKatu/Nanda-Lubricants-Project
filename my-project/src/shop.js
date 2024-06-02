@@ -12,6 +12,8 @@ function Shop() {
     const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
     const [products, setProducts] = useState([]);
     const [tableRows, setTableRows] = useState([]);
+    const [productName,setProductName] = useState(null);
+    const [productVolume,setProductVolume] = useState(null);
 
     const fetchDetails = async () => {
         try {
@@ -24,6 +26,12 @@ function Shop() {
     
     const saveAdd = async (data) => {
         setTableRows((prevTableRows) => [...prevTableRows, data]);
+        setValue('product',null);
+        setValue('quantity',null);
+        setValue('volume',null);
+        setValue('unitPrice',null);
+        setProductName(null);
+        setProductVolume(null); 
     };
     
     const placeOrder = async () => {
@@ -48,6 +56,24 @@ function Shop() {
             setValue('user', cookies.user_id);
         }
     }, [cookies.user_id]);
+
+    const fetchUnitPrice = async () => {
+        if (productName && productVolume) {
+            try {
+                const res = await axios.post("http://localhost:8000/api/stock/unitPrice", { productName,productVolume });
+                if (res.status === 200) {
+                    setValue('unitPrice', res.data[0].UNIT_PRICE);
+                    console.log(res.data[0].UNIT_PRICE);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    };
+
+    useEffect(()=>{
+        fetchUnitPrice();
+    },[productName,productVolume])
 
     const volumeOptions = [
         '1 L',
@@ -100,8 +126,8 @@ function Shop() {
                                     onChange={(e) => {
                                         const selectedIndex = e.target.selectedIndex;
                                         const selectedOption = e.target.options[selectedIndex];
-                                        setValue('unitPrice', selectedOption.getAttribute('unitprice'));
                                         setValue('pid', selectedOption.getAttribute('pid'));
+                                        setProductName(e.target.value);
                                     }}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
                                 >
@@ -118,6 +144,9 @@ function Shop() {
                                 <label>Quantity:</label>
                                 <input
                                     type="text"
+                                    // type="number"
+                                    // min={1}
+                                    // autoComplete='off'
                                     {...register('quantity', {
                                         required: 'Quantity is required',
                                         pattern: {
@@ -132,6 +161,7 @@ function Shop() {
                                 <label>Volume:</label>
                                 <select
                                     {...register('volume', { required: 'Volume is required' })}
+                                    onClick={(e)=>{setProductVolume(e.target.value)}}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-4"
                                 >
                                     <option value="">Select Volume</option>

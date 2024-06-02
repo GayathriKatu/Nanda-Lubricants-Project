@@ -55,6 +55,7 @@ const RegisterPage = () => {
                         <label htmlFor="shopName" className="block mb-2 text-white">Shop Name:</label>
                         <input
                             id="shopName"
+                            autoComplete='off'
                             type="text"
                             {...register('shopName')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -64,6 +65,7 @@ const RegisterPage = () => {
                         <label htmlFor="address" className="block mb-2 text-white">Address:</label>
                         <input
                             id="address"
+                            autoComplete='off'
                             type="text"
                             {...register('address')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -73,6 +75,7 @@ const RegisterPage = () => {
                         <label htmlFor="route" className="block mb-2 text-white">Route:</label>
                         <input
                             id="route"
+                            autoComplete='off'
                             type="text"
                             {...register('route')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -82,6 +85,7 @@ const RegisterPage = () => {
                         <label htmlFor="contactNumber" className="block mb-2 text-white">Contact Number:</label>
                         <input
                             id="contactNumber"
+                            autoComplete='off'
                             type="tel"
                             {...register('contactNumber')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -91,6 +95,7 @@ const RegisterPage = () => {
                         <label htmlFor="email" className="block mb-2 text-white">Email Address:</label>
                         <input
                             id="email"
+                            autoComplete='off'
                             type="email"
                             {...register('email')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -113,6 +118,7 @@ const RegisterPage = () => {
                         <label htmlFor="username" className="block mb-2 text-white">Username:</label>
                         <input
                             id="username"
+                            autoComplete='off'
                             type="text"
                             {...register('username')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -122,6 +128,7 @@ const RegisterPage = () => {
                         <label htmlFor="password" className="block mb-2 text-white">Password:</label>
                         <input
                             id="password"
+                            autoComplete='off'
                             type="password"
                             {...register('password')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
@@ -131,6 +138,7 @@ const RegisterPage = () => {
                         <label htmlFor="confirmPassword" className="block mb-2 text-white">Re-enter Password:</label>
                         <input
                             id="confirmPassword"
+                            autoComplete='off'
                             type="password"
                             {...register('confirmPassword')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"

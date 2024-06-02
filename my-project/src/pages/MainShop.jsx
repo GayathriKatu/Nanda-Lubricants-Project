@@ -4,6 +4,7 @@ import ProductComponent from "../Components/ProductComponent";
 import Inquiry from "./Inquiry"; // Import the inquiry popup component
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 // Overlay component
 function Overlay({ children, width = "full", height = "full" }) {
@@ -19,6 +20,8 @@ function Overlay({ children, width = "full", height = "full" }) {
 function MainShop() {
   // State to control the visibility of the inquiry popup
   const [showInquiry, setShowInquiry] = useState(false);
+  const [cookies] = useCookies(['user_id']);
+  const [retailer,setRetailer] = useState([]);
 
   // Function to open the inquiry popup
   const openInquiry = () => {
@@ -36,7 +39,18 @@ function MainShop() {
     try {
       const res = await axios.get("http://localhost:8000/api/products/mainshopdetails");
       setDetails(res.data);
-      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchLoginRetailer = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/retailer/details-by-user",{
+      headers: {
+        user_id: cookies.user_id
+      }});
+        setRetailer(res.data[0]);
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +58,7 @@ function MainShop() {
 
   useEffect(() => {
     fetchDetails();
+    fetchLoginRetailer();
   }, []);
 
   const navigate = useNavigate();
@@ -74,7 +89,7 @@ function MainShop() {
 
       {showInquiry && (
         <Overlay>
-          <Inquiry onClose={closeInquiry} />
+          <Inquiry onClose={closeInquiry} retailer={retailer}/>
         </Overlay>
       )}
     </div>

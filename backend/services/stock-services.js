@@ -1,24 +1,24 @@
-import {db } from '../.env';
+import { db } from '../.env';
 
 export const getAllStock = () => {
-    return new Promise ( (resolve,reject) => {
-        
+    return new Promise((resolve, reject) => {
+
         const q = `SELECT STOCK_ID, PRODUCT_NAME, VOLUME, QUANTITY, UNIT_PRICE FROM stock`;
-        
-        db.query ( q,(err,data) => {
-            if(err){
+
+        db.query(q, (err, data) => {
+            if (err) {
                 reject(err);
-            }else{
-                
-                const stock = data.map (item => ({
-                    stockId : item.STOCK_ID,
-                    product : item. PRODUCT_NAME,
-                    volume : item.VOLUME,
+            } else {
+
+                const stock = data.map(item => ({
+                    stockId: item.STOCK_ID,
+                    product: item.PRODUCT_NAME,
+                    volume: item.VOLUME,
                     stock: item.QUANTITY,
-                    price : item.UNIT_PRICE
+                    price: item.UNIT_PRICE
                 }))
                 resolve(stock);
-                
+
             }
         })
 
@@ -38,14 +38,14 @@ export const deleteStock = (stockId) => {
     });
 };
 
-export const AddstockService = ( productName, quantity, unitPrice, volume ) => {
-    return new Promise ( (resolve,reject) => {
+export const AddstockService = (productName, quantity, unitPrice, volume) => {
+    return new Promise((resolve, reject) => {
         const q = `INSERT INTO stock (PRODUCT_NAME, QUANTITY, UNIT_PRICE, VOLUME) VALUES (?,?,?,?)`;
 
-        db.query( q,[ productName, quantity, unitPrice, volume] , (err,data) =>{
-            if(err){
+        db.query(q, [productName, quantity, unitPrice, volume], (err, data) => {
+            if (err) {
                 reject(err)
-            }else{
+            } else {
                 resolve('added!');
             }
         })
@@ -53,24 +53,24 @@ export const AddstockService = ( productName, quantity, unitPrice, volume ) => {
 }
 
 export const getOutofStock = () => {
-    return new Promise ( (resolve,reject) => {
-        
+    return new Promise((resolve, reject) => {
+
         const q = `SELECT STOCK_ID, PRODUCT_NAME, VOLUME, QUANTITY, UNIT_PRICE FROM stock WHERE QUANTITY = 0`;
-        
-        db.query ( q,(err,data) => {
-            if(err){
+
+        db.query(q, (err, data) => {
+            if (err) {
                 reject(err);
-            }else{
-                
-                const stock = data.map (item => ({
-                    stockId : item.STOCK_ID,
-                    product : item. PRODUCT_NAME,
-                    volume : item.VOLUME,
+            } else {
+
+                const stock = data.map(item => ({
+                    stockId: item.STOCK_ID,
+                    product: item.PRODUCT_NAME,
+                    volume: item.VOLUME,
                     stock: item.QUANTITY,
-                    price : item.UNIT_PRICE
+                    price: item.UNIT_PRICE
                 }))
                 resolve(stock);
-                
+
             }
         })
 
@@ -88,7 +88,7 @@ export const getReorderProducts = () => {
                OR (VOLUME = '20 L' AND QUANTITY <= 200)
                OR (VOLUME = '210 L' AND QUANTITY <= 50);
         `;
-        
+
         db.query(q, (err, data) => {
             if (err) {
                 reject(err);
@@ -107,24 +107,24 @@ export const getReorderProducts = () => {
 };
 
 
-export const updateStockService = (quantity, unitPrice,productName, volume) => {
+export const updateStockService = (quantity, unitPrice, productName, volume) => {
     return new Promise((resolve, reject) => {
         const q = `UPDATE stock     SET  UNIT_PRICE = ? WHERE PRODUCT_NAME = ? AND VOLUME = ?`;
-        db.query(q, [ unitPrice, productName, volume], (err, result) => {
+        db.query(q, [unitPrice, productName, volume], (err, result) => {
             if (err) {
                 reject(err);
                 return;
-            }      
- 
+            }
+
             const add = `UPDATE stock SET QUANTITY = QUANTITY + ? WHERE PRODUCT_NAME = ? AND VOLUME = ?`;
-            db.query(add, [quantity, productName, volume], (err, result)  => {
+            db.query(add, [quantity, productName, volume], (err, result) => {
                 if (err) {
                     reject(err);
                     return;
                 }
                 resolve("Added");
             })
-            
+
         });
     });
 }
@@ -132,36 +132,48 @@ export const updateStockService = (quantity, unitPrice,productName, volume) => {
 //total instock
 export const getTotalStockCount = () => {
     return new Promise((resolve, reject) => {
-      const q = `SELECT SUM(QUANTITY) AS totalStockCount FROM stock`;
-  
-      db.query(q, (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          const totalStockCount = data[0].totalStockCount || 0;
-          resolve(totalStockCount);
-        }
-      });
-    });
-  };
+        const q = `SELECT SUM(QUANTITY) AS totalStockCount FROM stock`;
 
-  //stock value
-  export const getTotalInventoryValue = () => {
+        db.query(q, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                const totalStockCount = data[0].totalStockCount || 0;
+                resolve(totalStockCount);
+            }
+        });
+    });
+};
+
+//stock value
+export const getTotalInventoryValue = () => {
     return new Promise((resolve, reject) => {
-      const q = `
+        const q = `
         SELECT SUM(UNIT_PRICE * QUANTITY) AS totalInventoryValue
         FROM stock
       `;
-  
-      db.query(q, (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          const totalInventoryValue = data[0].totalInventoryValue || 0;
-          resolve({ totalInventoryValue });
-        }
-      });
+
+        db.query(q, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                const totalInventoryValue = data[0].totalInventoryValue || 0;
+                resolve({ totalInventoryValue });
+            }
+        });
     });
-  };
-  
-  
+};
+
+export const getUnitPriceByProductAndVolume = (productName,productVolume) => {
+    return new Promise((resolve, reject) => {
+        const q = `SELECT UNIT_PRICE FROM stock WHERE PRODUCT_NAME = ? AND VOLUME= ?`;
+        db.query(q,[productName,productVolume], (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+};
+

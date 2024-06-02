@@ -43,6 +43,7 @@ const LoginPage = () => {
                                 type="text"
                                 {...register('username')}
                                 className="w-40 px-3 py-2 border border-gray-300 rounded"
+                                autoComplete='off'
                             />
                         </div>
                         <div className="mb-4">
@@ -52,6 +53,7 @@ const LoginPage = () => {
                                 type="password"
                                 {...register('password')}
                                 className="w-40 px-3 py-2 border border-gray-300 rounded"
+                                autoComplete='off'
                             />
                         </div>
                         <PrimaryButton text="Login" type="submit" className="w-full" />

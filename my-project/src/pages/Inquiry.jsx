@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import PrimaryButton from '../Components/PrimaryButton';
 import axios from 'axios';
 
-function Inquiry({ onClose }) {
+function Inquiry({ onClose,retailer }) {
   const [inquiry, setInquiry] = useState({
-    userName: "",
-    shopName: "",
+    userName: retailer.user,
+    shopName: retailer.shop,
     orderId: "",
-    contactNumber: "",
+    contactNumber: retailer.contactNumber,
     description: ""
   });
 
@@ -77,7 +77,6 @@ function Inquiry({ onClose }) {
       setErrors(newErrors);
       return;
     }
-
     try {
       const res = await axios.post('http://localhost:8000/api/inquiry/add', inquiry);
       console.log(res.data);
@@ -100,6 +99,7 @@ function Inquiry({ onClose }) {
             name="userName"
             onChange={handleInputs}
             value={inquiry.userName}
+            disabled
             className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
           {errors.userName && <p className="text-red-500">{errors.userName}</p>}
@@ -112,6 +112,7 @@ function Inquiry({ onClose }) {
             name="shopName"
             onChange={handleInputs}
             value={inquiry.shopName}
+            disabled
             className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -135,6 +136,7 @@ function Inquiry({ onClose }) {
             name="contactNumber"
             onChange={handleInputs}
             value={inquiry.contactNumber}
+            disabled
             className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
           {errors.contactNumber && <p className="text-red-500">{errors.contactNumber}</p>}

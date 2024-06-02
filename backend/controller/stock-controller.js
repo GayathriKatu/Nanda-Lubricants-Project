@@ -1,7 +1,7 @@
 import {getAllStock, getReorderProducts} from '../services/stock-services.js';
 import { deleteStock , 
          AddstockService, getOutofStock,
-         updateStockService, getTotalStockCount, getTotalInventoryValue } from '../services/stock-services.js';
+         updateStockService, getTotalStockCount, getTotalInventoryValue,getUnitPriceByProductAndVolume } from '../services/stock-services.js';
 
 export const stockDetails = async (req,res) => {
     try{
@@ -26,7 +26,6 @@ export const deleteStockById = async (req, res) => {
 
 export const Addstock = async (req,res) => {
     const { productName, quantity, unitPrice, volume }  = req.body;
-    console.log(productName, quantity, unitPrice, volume)
     try{
         const data = await  AddstockService(productName, quantity, unitPrice, volume);
         return res.status(200).json(data);
@@ -91,4 +90,15 @@ export const TotalStockCount = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   };
+
+export const GetUnitPriceByProductAndVolume = async (req, res) => {
+    try {
+        const { productName,productVolume } = req.body
+        const data = await getUnitPriceByProductAndVolume(productName,productVolume);
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
   
