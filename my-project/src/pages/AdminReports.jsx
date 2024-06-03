@@ -6,6 +6,7 @@ import BestCustomers from '../Components/BestCustomers';
 import BestRoutes from '../Components/BestRoutes';
 import TopSellingProducts from '../Components/TopSellingProducts';
 import InventoryByCategory from '../Components/InventoryByCategory';
+import OrderCountByDate from '../Components/OrderCountByDate';
 
 const AdminReports = () => {
   return (
@@ -18,7 +19,8 @@ const AdminReports = () => {
         <BestCustomers />
         <BestRoutes />
         <TopSellingProducts />
-        {/* <InventoryByCategory />  */}
+        {/* <InventoryByCategory /> */}
+        <OrderCountByDate/>
       </div>
     </div>
   );

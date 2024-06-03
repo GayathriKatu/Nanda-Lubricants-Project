@@ -28,7 +28,7 @@ function Inquiry({ onClose,retailer }) {
         }
         break;
       case 'contactNumber':
-        if (!/^\d{7}$/.test(value)) {
+        if (!/^\d{10}$/.test(value)) {
           error = "Contact number should be a non-negative integer with 7 characters";
         }
         break;

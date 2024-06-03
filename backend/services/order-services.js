@@ -243,6 +243,28 @@ export const getTop5Routes = () => {
   });
 };
 
+//orders line chart
+
+export const getOrderCountByDate = () => {
+    return new Promise((resolve, reject) => {
+      const q = `
+        SELECT DATE(DATE_PLACED) AS date, COUNT(ORDER_ID) AS orderCount
+        FROM order_
+        WHERE DATE_PLACED >= CURDATE() - INTERVAL 14 DAY
+        GROUP BY DATE(DATE_PLACED)
+        ORDER BY DATE(DATE_PLACED)
+      `;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
+
 
 
 

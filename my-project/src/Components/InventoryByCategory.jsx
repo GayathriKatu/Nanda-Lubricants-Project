@@ -1,6 +1,7 @@
+// src/components/InventoryByCategory.jsx
 import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
+import LineChart from './LineChart'; // Import the LineChart component
 
 const InventoryByCategory = () => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -34,22 +35,10 @@ const InventoryByCategory = () => {
     ]
   };
 
-  const chartOptions = {
-    scales: {
-      x: {
-        type: 'linear',
-        labels: categories
-      },
-      y: {
-        // Your y-axis configuration
-      }
-    }
-  };
-
   return (
     <div className="bg-white shadow-md rounded p-4">
       <h2 className="text-xl font-bold">Inventory by Category</h2>
-      <Bar data={chartData} options={chartOptions} />
+      <LineChart chartData={chartData} />
     </div>
   );
 };
