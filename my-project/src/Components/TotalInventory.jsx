@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import totalSalesImage from '../Images/Total Sales.png';
 
 const TotalInventory = () => {
   const [totalInventory, setTotalInventory] = useState(0);
@@ -18,9 +19,12 @@ const TotalInventory = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded p-4">
-      <h2 className="text-xl font-bold">Total Inventory</h2>
-      <p className="text-2xl">{totalInventory}</p>
+    <div className="bg-white bg-opacity-10 shadow-lg rounded-lg p-6 flex items-center justify-between">
+    <div>
+      <h2 className="text-3xl text-white mb-4">Total Inventory</h2>
+      <p className="text-3xl font-semibold text-white">{totalInventory}</p>
+      </div>
+      <img src={totalSalesImage} alt="Total Sales" className="w-16 h-16 object-contain" />
     </div>
   );
 };

@@ -1,7 +1,6 @@
-// src/components/TopSellingProducts.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import bestSellingProductImage from '../Images/Best Selling Product.png'; // Adjust the path as necessary
 
 const TopSellingProducts = () => {
   const [products, setProducts] = useState([]);
@@ -20,11 +19,14 @@ const TopSellingProducts = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded p-4">
-      <h2 className="text-xl font-bold">Top 10 Selling Products</h2>
+    <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
+      <h2 className="text-3xl mb-6 text-white">Top 10 Selling Products</h2>
       <ul>
         {products.map((product, index) => (
-          <li key={index}>{product.productName}</li>
+          <li key={index} className="flex items-center mb-2 text-white">
+            <img src={bestSellingProductImage} alt="Best Selling Product" className="w-6 h-6 mr-2" />
+            <span className="text-lg font-semibold">{product.productName}</span>
+          </li>
         ))}
       </ul>
     </div>

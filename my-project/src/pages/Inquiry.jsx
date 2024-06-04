@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PrimaryButton from '../Components/PrimaryButton';
 import axios from 'axios';
 
-function Inquiry({ onClose,retailer }) {
+function Inquiry({ onClose, retailer }) {
   const [inquiry, setInquiry] = useState({
     userName: retailer.user,
     shopName: retailer.shop,
@@ -33,7 +33,9 @@ function Inquiry({ onClose,retailer }) {
         }
         break;
       case 'description':
-        if (value.length > 200) {
+        if (value.length === 0) {
+          error = "Inquiry description should not be empty";
+        } else if (value.length > 200) {
           error = "Inquiry description should be less than 200 characters";
         }
         break;
@@ -153,8 +155,9 @@ function Inquiry({ onClose,retailer }) {
           ></textarea>
           {errors.description && <p className="text-red-500">{errors.description}</p>}
         </div>
-        <div className="flex justify-end">
-          <PrimaryButton text="Send Inquiry" onClick={handleSubmit} />
+        <div className="flex justify-end space-x-4">
+          <PrimaryButton text="Cancel" type="button" onClick={onClose} />
+          <PrimaryButton text="Send Inquiry" type="submit" />
         </div>
       </form>
     </div>

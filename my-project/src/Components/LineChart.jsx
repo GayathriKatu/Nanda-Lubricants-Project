@@ -25,14 +25,14 @@ ChartJS.register(
 function LineChart({ chartData }) {
   return (
     <div className="chart-container">
-      <h2 style={{ textAlign: "center" }}>Line Chart</h2>
+      
       <Line
         data={chartData}
         options={{
           plugins: {
             title: {
-              display: true,
-              text: "Order Count by Date (Last 14 Days)"
+              display: true
+             
             },
             legend: {
               display: false
@@ -41,6 +41,7 @@ function LineChart({ chartData }) {
           scales: {
             x: {
               type: 'category'
+              
             }
           }
         }}

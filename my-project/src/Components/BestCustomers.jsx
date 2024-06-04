@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import bestCustomerImage from '../Images/Best Customers.png'; // Adjust the path as necessary
 
 const BestCustomers = () => {
   const [customers, setCustomers] = useState([]);
@@ -18,12 +19,14 @@ const BestCustomers = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded p-4">
-      <h2 className="text-xl font-bold">Best 5 Customers</h2>
+    <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
+      <h2 className="text-3xl mb-6 text-white">Best 5 Customers</h2>
       <ul>
         {customers.map((customer, index) => (
-          <li key={index}>
-            {customer.shopName} - {customer.orderCount}
+          <li key={index} className="flex items-center mb-2 text-white">
+            <img src={bestCustomerImage} alt="Best Customer" className="w-6 h-6 mr-2" />
+            <span className="text-lg font-semibold">{customer.shopName}</span>
+            <span className="ml-8">{customer.orderCount}</span> {/* Adjusted margin */}
           </li>
         ))}
       </ul>

@@ -1,6 +1,6 @@
-// src/components/BestRoutes.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import bestRouteImage from '../Images/Best Routes.png'; // Adjust the path as necessary
 
 const BestRoutes = () => {
   const [routes, setRoutes] = useState([]);
@@ -19,11 +19,14 @@ const BestRoutes = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded p-4">
-      <h2 className="text-xl font-bold">Best 5 Routes</h2>
+    <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
+      <h2 className="text-3xl  mb-6 text-white">Best 5 Routes</h2>
       <ul>
         {routes.map((route, index) => (
-          <li key={index}>{route.routeName}</li>
+          <li key={index} className="flex items-center mb-2 text-white">
+            <img src={bestRouteImage} alt="Best Route" className="w-6 h-6 mr-2" />
+            <span className="text-lg font-semibold">{route.routeName}</span>
+          </li>
         ))}
       </ul>
     </div>

@@ -14,6 +14,10 @@ function UpdateInventory() {
     unitPrice: cardContent?.price || ''
   });
 
+  const [errors, setErrors] = useState({
+    quantity: ""
+  });
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
@@ -29,14 +33,36 @@ function UpdateInventory() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+
+    let errorMessage = "";
+    if (id === 'quantity' && value && (!/^\d+$/.test(value) || parseInt(value, 10) < 0)) {
+      errorMessage = "Quantity should be a non-negative integer.";
+    }
+
     setProduct((prevProduct) => ({
       ...prevProduct,
       [id]: value
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [id]: errorMessage
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate the quantity field before submission
+    if (product.quantity && (!/^\d+$/.test(product.quantity) || parseInt(product.quantity, 10) < 0)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        quantity: "Quantity should be a non-negative integer."
+      }));
+      alert("Please correct the errors before submitting.");
+      return;
+    }
+
     try {
       const response = await axios.put('http://localhost:8000/api/stock/update', product);
       console.log('Product response:', response.data);
@@ -76,6 +102,7 @@ function UpdateInventory() {
               onChange={handleChange}
               className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             />
+            {errors.quantity && <span className="text-red-500 text-sm">{errors.quantity}</span>}
           </div>
           <div className="mb-4">
             <label htmlFor="volume" className="block text-sm font-medium text-white">Volume</label>

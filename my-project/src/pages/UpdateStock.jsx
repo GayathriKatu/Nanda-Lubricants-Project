@@ -92,12 +92,28 @@ function UpdateStock({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check for any existing errors before submission
-    for (let key in errors) {
-      if (errors[key]) {
-        alert("Please correct the errors before submitting.");
-        return;
+    // Check for any empty fields before submission
+    let hasErrors = false;
+    let newErrors = {};
+
+    for (let key in product) {
+      if (!product[key]) {
+        newErrors[key] = "This field is required.";
+        hasErrors = true;
       }
+    }
+
+    for (let key in stock) {
+      if (!stock[key]) {
+        newErrors[key] = "This field is required.";
+        hasErrors = true;
+      }
+    }
+
+    if (hasErrors) {
+      setErrors(newErrors);
+      alert("Please fill in all the fields before submitting.");
+      return;
     }
 
     try {
