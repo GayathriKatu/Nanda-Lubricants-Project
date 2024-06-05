@@ -8,21 +8,23 @@ function UpdateStaff({ onClose }) {
     const navigate = useNavigate();
     const location = useLocation();
     const { cardContent } = location.state || {};
-    const { register, handleSubmit, formState: { errors },reset } = useForm();
-    
-    useEffect(()=>{
-        reset(cardContent)
-    },[])
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: cardContent
+    });
+
+    useEffect(() => {
+        reset(cardContent);
+    }, [reset, cardContent]);
 
     const handleCancel = () => {
         navigate('/staffdetails');
     };
 
-    const saveUpdate = async(data) => {
+    const saveUpdate = async (data) => {
         try {
-            const res = await axios.post("http://localhost:8000/api/staff/update",data);
+            const res = await axios.post("http://localhost:8000/api/staff/update", data);
             console.log(res);
-            if(res.status === 200) {
+            if (res.status === 200) {
                 navigate('/staffdetails');
             }
         } catch (err) {
@@ -43,7 +45,7 @@ function UpdateStaff({ onClose }) {
                             autoComplete="off"
                             {...register('userName', { required: 'Username is required' })}
                         />
-                        {errors.username && <span className="text-red-500">{errors.username.message}</span>}
+                        {errors.userName && <span className="text-red-500">{errors.userName.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-white">Password</label>
@@ -59,7 +61,10 @@ function UpdateStaff({ onClose }) {
                             type="text"
                             className="w-full p-2 border border-gray-700 rounded bg-gray-700 text-white"
                             autoComplete="off"
-                            {...register('fullName', { required: 'Full Name is required' })}
+                            {...register('fullName', {
+                                required: 'Full Name is required',
+                                maxLength: { value: 20, message: 'Full Name must be less than 20 characters' }
+                            })}
                         />
                         {errors.fullName && <span className="text-red-500">{errors.fullName.message}</span>}
                     </div>
@@ -69,12 +74,15 @@ function UpdateStaff({ onClose }) {
                             type="text"
                             className="w-full p-2 border border-gray-700 rounded bg-gray-700 text-white"
                             autoComplete="off"
-                            {...register('contactNo', { required: 'Contact No is required' })}
+                            {...register('contactNo', {
+                                required: 'Contact No is required',
+                                pattern: { value: /^\d{10}$/, message: 'Contact No must be a 10-character non-negative integer' }
+                            })}
                         />
                         {errors.contactNo && <span className="text-red-500">{errors.contactNo.message}</span>}
                     </div>
                     <div className="flex justify-end gap-2">
-                        <PrimaryButton text="Update" onClick={onClose} />
+                        <PrimaryButton text="Update" type="submit" />
                         <PrimaryButton text="Cancel" onClick={handleCancel} />
                     </div>
                 </form>

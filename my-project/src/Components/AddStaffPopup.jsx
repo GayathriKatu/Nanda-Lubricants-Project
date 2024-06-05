@@ -4,9 +4,9 @@ import PrimaryButton from '../Components/PrimaryButton';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-function AddStaffPopup({ onClose,fetch }) {
+function AddStaffPopup({ onClose, fetch }) {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors },reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const saveAdd = async (data) => {
         const res = await axios.post('http://localhost:8000/api/staff/register', data);
@@ -15,7 +15,8 @@ function AddStaffPopup({ onClose,fetch }) {
             onClose();
             fetch();
         }
-    }
+    };
+
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-1/3">
@@ -46,7 +47,10 @@ function AddStaffPopup({ onClose,fetch }) {
                             type="text"
                             className="w-full p-2 border border-gray-700 rounded bg-gray-700 text-white"
                             autoComplete="off"
-                            {...register('fullName', { required: 'Full Name is required' })}
+                            {...register('fullName', {
+                                required: 'Full Name is required',
+                                maxLength: { value: 20, message: 'Full Name must be less than or equal to 20 characters' }
+                            })}
                         />
                         {errors.fullName && <span className="text-red-500">{errors.fullName.message}</span>}
                     </div>
@@ -56,7 +60,10 @@ function AddStaffPopup({ onClose,fetch }) {
                             type="text"
                             className="w-full p-2 border border-gray-700 rounded bg-gray-700 text-white"
                             autoComplete="off"
-                            {...register('contactNo', { required: 'Contact No is required' })}
+                            {...register('contactNo', {
+                                required: 'Contact No is required',
+                                pattern: { value: /^\d{10}$/, message: 'Contact No must be a non-negative integer and exactly 10 characters' }
+                            })}
                         />
                         {errors.contactNo && <span className="text-red-500">{errors.contactNo.message}</span>}
                     </div>
@@ -65,7 +72,6 @@ function AddStaffPopup({ onClose,fetch }) {
                         <PrimaryButton text="Cancel" onClick={onClose} />
                     </div>
                 </form>
-
             </div>
         </div>
     );

@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -19,26 +18,73 @@ import InquiryDisplay from './pages/InquiryDisplay';
 import StaffDetails from './pages/StaffDetails';
 import UpdateStaff from './Components/UpdateStaff';
 import AdminReports from './pages/AdminReports';
-import { FaFacebook } from 'react-icons/fa'; // Importing the Facebook icon
+import { FaFacebook } from 'react-icons/fa';
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user_id', 'user_type']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [userType, setUserType] = useState('');
 
     useEffect(() => {
         if (cookies.user_id) {
             setIsLoggedIn(true);
-        }
-        if (cookies.user_type === 'Admin') {
-            setIsAdmin(true);
+            setUserType(cookies.user_type);
         }
     }, [cookies]);
+
+    const renderNavLinks = () => {
+        if (!isLoggedIn) {
+            return (
+                <>
+                    <Link to='/' className="nav-link">Home</Link>
+                    <Link to='/login' className="nav-link">Login</Link>
+                    <Link to='/register' className="nav-link">Register</Link>
+                    <Link to='/shop' className="nav-link">Shop</Link>
+
+                </>
+            );
+        } else {
+            switch (userType) {
+                case 'Retailer':
+                    return (
+                        <>
+                            <Link to='/' className="nav-link">Home</Link>
+                            <Link to='/login' className="nav-link">Login</Link>
+                            <Link to='/shop' className="nav-link">Shop</Link>
+                            {/* <Link to='/register' className="nav-link">Register</Link> */}
+                        </>
+                    );
+                case 'Staff':
+                    return (
+                        <>
+                            <Link to='/' className="nav-link">Home</Link>
+                            <Link to='/login' className="nav-link">Login</Link>
+                            <Link to='/currentstock' className="nav-link">Current Stock</Link>
+                            <Link to='/deliveryschedule' className="nav-link">Delivery Schedule</Link>
+                            <Link to='/inquirydisplay' className="nav-link">Inquiries</Link>
+                        </>
+                    );
+                case 'Admin':
+                    return (
+                        <>
+                            <Link to='/' className="nav-link">Home</Link>
+                            <Link to='/login' className="nav-link">Login</Link>
+                            <Link to='/currentstock' className="nav-link">Current Stock</Link>
+                            <Link to='/staffdetails' className="nav-link">Staff</Link>
+                            <Link to='/deliveryschedule' className="nav-link">Delivery Schedule</Link>
+                            <Link to='/inquirydisplay' className="nav-link">Inquiries</Link>
+                        </>
+                    );
+                default:
+                    return null;
+            }
+        }
+    };
 
     return (
         <BrowserRouter>
             <div className="app-container">
-            <header className="ribbon flex justify-between items-center p-2 bg-gray-800 text-white">
+                <header className="ribbon flex justify-between items-center p-2 bg-gray-800 text-white">
                     <div className="logo flex items-center">
                         <img src={logo} alt="Nanda Logo" className="h-10 mr-2" />
                         <div className="company-info">
@@ -54,12 +100,7 @@ function App() {
                     </div>
                 </header>
                 <nav className="navigation flex justify-end p-2">
-                    <Link to='/' className="nav-link">Home</Link>
-                    {isAdmin && <Link to='/currentstock' className="nav-link">Stock</Link>}
-                    {isAdmin && <Link to='/staffdetails' className="nav-link">Staff</Link>}
-                    <Link to='/register' className="nav-link">Register</Link>
-                    {!isLoggedIn && <Link to='/login' className="nav-link">Login</Link>}
-                    <Link to='/shop' className="nav-link">Shop</Link>
+                    {renderNavLinks()}
                 </nav>
                 <Routes>
                     <Route path='/' element={<Home />} />

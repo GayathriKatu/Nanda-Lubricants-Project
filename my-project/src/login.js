@@ -16,7 +16,7 @@ const LoginPage = () => {
                 document.cookie = `user_id=${res.data.user}; max-age=${30*60}; path=/`;
                 document.cookie = `user_type=${res.data.name}; max-age=${30*60}; path=/`;
                 reset();
-                if (res.data.name === 'Admin') {
+                if (res.data.name === 'Admin' || res.data.name === 'Staff') {
                     navigate('/currentstock');
                 } else {
                     navigate('/mainShop');
