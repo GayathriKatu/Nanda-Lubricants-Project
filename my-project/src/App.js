@@ -69,10 +69,12 @@ function App() {
                         <>
                             <Link to='/' className="nav-link">Home</Link>
                             <Link to='/login' className="nav-link">Login</Link>
+                            <Link to='/adminreports' className="nav-link">Reports</Link>
                             <Link to='/currentstock' className="nav-link">Current Stock</Link>
                             <Link to='/staffdetails' className="nav-link">Staff</Link>
                             <Link to='/deliveryschedule' className="nav-link">Delivery Schedule</Link>
                             <Link to='/inquirydisplay' className="nav-link">Inquiries</Link>
+                            
                         </>
                     );
                 default:

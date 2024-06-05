@@ -25,7 +25,6 @@ const OrderCountByDate = () => {
     labels: dates,
     datasets: [
       {
-        
         data: counts,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: '#DEC7A1',
@@ -36,11 +35,10 @@ const OrderCountByDate = () => {
 
   return (
     <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
-      <h2 className="text-3xl text-white">Number of Orders (Last 14 Days)</h2>
-      <div className="col-span-3">
-      <LineChart chartData={chartData} />
+      <h2 className="text-3xl text-white mb-4">Number of Orders (Last 14 Days)</h2>
+      <div className="h-80"> {/* Adjust the height as needed */}
+        <LineChart chartData={chartData} />
       </div>
-      
     </div>
   );
 };

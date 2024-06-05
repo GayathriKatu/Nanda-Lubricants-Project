@@ -1,4 +1,3 @@
-// DeliverySchedule.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -7,6 +6,8 @@ import DateTimePicker from "../Components/DateTimePicker";
 import PrimaryButton from "../Components/PrimaryButton";
 import DropDown from "../Components/DropDown";
 import DeliveryCard from "../Components/DeliveryCard";
+import logo from "../Images/NandaLogo.png";
+
 
 function DeliverySchedule() {
   const [selectedSortByRoute, setSelectedSortByRoute] = useState("");
@@ -60,6 +61,23 @@ function DeliverySchedule() {
   // Generate PDF
   const generatePDF = () => {
     const doc = new jsPDF();
+    
+    // Add custom header
+    doc.setFontSize(18);
+    doc.setTextColor(81, 130, 200); // Set text color to blue (RGB: 0, 0, 255)
+    doc.text("Nanda Lubricants", 14, 22);
+    
+    // Reset font size and color for other text
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0); // Set text color to black (RGB: 0, 0, 0)
+    doc.text("Contact: +94 371933455", 14, 28);
+    doc.text("Address: Nanda Lubricants, Colombo road, Kurnegala", 14, 32);
+
+    // Add space before table
+    doc.addImage(logo, 'JPEG', 180, 10, 15, 15);
+    doc.text(`Filtered Route: ${selectedSortByRoute || "All Routes"}`, 14, 42);
+    doc.text(`Date Range: ${fromDate.toDateString()} - ${toDate.toDateString()}`, 14, 48);
+    
     const tableData = filteredDetails.map((detail) => [
       detail.orderId,
       detail.shopName,
@@ -69,6 +87,7 @@ function DeliverySchedule() {
     ]);
 
     doc.autoTable({
+      startY: 54, // Adjust start position after the custom header
       head: [["Order ID", "Shop Name", "Route Name", "Date Placed", "Total Price(Rs)"]],
       body: tableData,
     });

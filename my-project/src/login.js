@@ -12,16 +12,29 @@ const LoginPage = () => {
     const login = async (data) => {
         try {
             const res = await axios.post('http://localhost:8000/api/user/login', data);
+            // if (res.status === 200) {
+            //     document.cookie = `user_id=${res.data.user}; max-age=${30*60}; path=/`;
+            //     document.cookie = `user_type=${res.data.name}; max-age=${30*60}; path=/`;
+            //     reset();
+            //     if (res.data.name === 'Admin' || res.data.name === 'Staff') {
+            //         navigate('/currentstock');
+            //     } else {
+            //         navigate('/mainShop');
+            //     }
+            // }
             if (res.status === 200) {
-                document.cookie = `user_id=${res.data.user}; max-age=${30*60}; path=/`;
-                document.cookie = `user_type=${res.data.name}; max-age=${30*60}; path=/`;
+                document.cookie = `user_id=${res.data.user}; max-age=${30 * 60}; path=/`;
+                document.cookie = `user_type=${res.data.name}; max-age=${30 * 60}; path=/`;
                 reset();
-                if (res.data.name === 'Admin' || res.data.name === 'Staff') {
+                if (res.data.name === 'Admin') {
+                    navigate('/adminreports');
+                } else if (res.data.name === 'Staff') {
                     navigate('/currentstock');
                 } else {
                     navigate('/mainShop');
                 }
             }
+            
         } catch (error) {
             console.error('Login error:', error.message);
         }

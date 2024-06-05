@@ -11,16 +11,45 @@ import OrderCountByDate from '../Components/OrderCountByDate';
 const AdminReports = () => {
   return (
     <div className="container mx-auto p-4 bg-gray-800">
-      <h1 className="text-3xl font-bold mb-6 text-white mt-6">NANDA LUBRICANT DASHBOARD</h1>
-      <div className="grid grid-cols-3 gap-6">
-        <TotalSales />
-        <TotalInventory />
-        <TotalInventoryValue />
-        <BestCustomers />
-        <BestRoutes />
-        <TopSellingProducts />
-        {/* <InventoryByCategory /> */}
-        <OrderCountByDate/>
+      <h1 className="text-3xl mb-6 text-white mt-6">NANDA LUBRICANT DASHBOARD</h1>
+      <div className="grid grid-cols-4 gap-6">
+        {/* Left Side (1:3 ratio) */}
+        <div className="col-span-1">
+          <div className="mb-4"> {/* Add margin-bottom for space */}
+            <TotalSales />
+          </div>
+          <div className="mb-4"> {/* Add margin-bottom for space */}
+            <TotalInventory />
+          </div>
+          <div className="mb-4"> {/* Add margin-bottom for space */}
+            <TotalInventoryValue />
+          </div>
+        </div>
+
+        {/* Right Side (3:1 ratio) */}
+        <div className="col-span-3">
+          <div className="grid grid-cols-2 gap-6">
+            {/* First Part of Right Side (1:2 ratio) */}
+            <div className="col-span-1">
+              <div className="mb-4"> {/* Add margin-bottom for space */}
+                <OrderCountByDate />
+              </div>
+              <div className="mb-4"> {/* Add margin-bottom for space */}
+                <BestRoutes />
+              </div>
+            </div>
+
+            {/* Second Part of Right Side (1:2 ratio) */}
+            <div className="col-span-1">
+              <div className="mb-4"> {/* Add margin-bottom for space */}
+                <BestCustomers />
+              </div>
+              <div className="mb-4"> {/* Add margin-bottom for space */}
+                <TopSellingProducts />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
