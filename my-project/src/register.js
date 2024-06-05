@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import BankDetailsPopup from './BankPopup';
 import PrimaryButton from './Components/PrimaryButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const ROUTES = [
+    'Wariyapola 01',
+    'Pothuhera',
+    'Route 3',
+    'Route 4',
+    'Route 5',
+    'Route 6',
+    'Route 7',
+    'Route 8',
+    'Route 9',
+    'Route 10',
+    'Route 11',
+    'Route 12',
+    'Route 13',
+    'Route 14',
+    'Route 15'
+];
 
 const RegisterPage = () => {
-    const { register, reset, handleSubmit } = useForm();
+    const { register, reset, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [bankDetails, setBankDetails] = useState({ bankName: '', accountName: '', accountNumber: '' });
@@ -67,19 +84,25 @@ const RegisterPage = () => {
                             id="address"
                             autoComplete='off'
                             type="text"
-                            {...register('address')}
+                            {...register('address', { 
+                                maxLength: { value: 50, message: "Address must be less than 50 characters" } 
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.address && <p className="text-red-500">{errors.address.message}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="route" className="block mb-2 text-white">Route:</label>
-                        <input
+                        <select
                             id="route"
-                            autoComplete='off'
-                            type="text"
                             {...register('route')}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
-                        />
+                        >
+                            <option value="">Select a route</option>
+                            {ROUTES.map(route => (
+                                <option key={route} value={route}>{route}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="contactNumber" className="block mb-2 text-white">Contact Number:</label>
@@ -87,9 +110,12 @@ const RegisterPage = () => {
                             id="contactNumber"
                             autoComplete='off'
                             type="tel"
-                            {...register('contactNumber')}
+                            {...register('contactNumber', { 
+                                pattern: { value: /^[0-9]{10}$/, message: "Contact number must be exactly 10 digits" } 
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.contactNumber && <p className="text-red-500">{errors.contactNumber.message}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="block mb-2 text-white">Email Address:</label>
@@ -97,18 +123,13 @@ const RegisterPage = () => {
                             id="email"
                             autoComplete='off'
                             type="email"
-                            {...register('email')}
+                            {...register('email', { 
+                                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } 
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                     </div>
-                    {/* <button
-                        type="button"
-                        onClick={openPopup}
-                        className="bg-[#D4C5A9] text-black font-medium py-2 px-4 rounded-md hover:bg-[#b3a081] transition duration-300 mb-8"
-                    >
-                        Enter Bank Details
-                    </button> */}
-
                 </form>
             </div>
             <div className="w-1/2 mx-4 mt-20">
@@ -130,9 +151,14 @@ const RegisterPage = () => {
                             id="password"
                             autoComplete='off'
                             type="password"
-                            {...register('password')}
+                            {...register('password', { 
+                                minLength: { value: 6, message: "Password must be at least 6 characters" },
+                                maxLength: { value: 12, message: "Password must be less than 12 characters" },
+                                pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,12}$/, message: "Password must contain at least one uppercase letter, one lowercase letter, and one number" }
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="confirmPassword" className="block mb-2 text-white">Re-enter Password:</label>
@@ -140,9 +166,12 @@ const RegisterPage = () => {
                             id="confirmPassword"
                             autoComplete='off'
                             type="password"
-                            {...register('confirmPassword')}
+                            {...register('confirmPassword', { 
+                                validate: value => value === watch('password') || "Passwords do not match" 
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
                     </div>
                     <PrimaryButton text="Register" type="submit" className="w-full" />
                 </form>
