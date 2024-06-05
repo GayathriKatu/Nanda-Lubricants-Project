@@ -124,7 +124,10 @@ const RegisterPage = () => {
                             autoComplete='off'
                             type="email"
                             {...register('email', { 
-                                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } 
+                                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+                                validate: {
+                                    noUppercase: value => value === value.toLowerCase() || "Email address must not contain uppercase letters"
+                                }
                             })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />

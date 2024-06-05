@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import PrimaryButton from '../Components/PrimaryButton';
 import { useForm } from 'react-hook-form';
@@ -7,13 +7,22 @@ import { useNavigate } from 'react-router-dom';
 function AddStaffPopup({ onClose, fetch }) {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const saveAdd = async (data) => {
-        const res = await axios.post('http://localhost:8000/api/staff/register', data);
-        console.log(res);
-        if (res.status === 200) {
-            onClose();
-            fetch();
+        try {
+            const res = await axios.post('http://localhost:8000/api/staff/register', data);
+            console.log(res);
+            if (res.status === 200) {
+                onClose();
+                fetch();
+            }
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage('An error occurred while adding the staff. Please try again.');
+            }
         }
     };
 
@@ -30,7 +39,7 @@ function AddStaffPopup({ onClose, fetch }) {
                             autoComplete="off"
                             {...register('username', { required: 'Username is required' })}
                         />
-                        {errors.username && <span className="text-red-500">{errors.username.message}</span>}
+                        {errorMessage && <span className="text-red-500">{errorMessage}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-white">Password</label>

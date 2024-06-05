@@ -11,7 +11,7 @@ import OrderCountByDate from '../Components/OrderCountByDate';
 const AdminReports = () => {
   return (
     <div className="container mx-auto p-4 bg-gray-800">
-      <h1 className="text-3xl mb-6 text-white mt-6">NANDA LUBRICANT DASHBOARD</h1>
+      <h1 className="text-3xl mb-8 text-white mt-6">NANDA LUBRICANT DASHBOARD</h1>
       <div className="grid grid-cols-4 gap-6">
         {/* Left Side (1:3 ratio) */}
         <div className="col-span-1">
