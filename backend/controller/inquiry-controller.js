@@ -1,5 +1,5 @@
 // controller/inquiry-controller.js
-import { AddinquiryService, getAllInquiry } from '../services/inquiry-services.js';
+import { AddinquiryService, getAllInquiry, deleteInquiry } from '../services/inquiry-services.js';
 
 export const Addinquiry = async (req, res) => {
   const { orderId, description } = req.body;
@@ -27,3 +27,14 @@ export const inquiryDetails = async (req,res) => {
       return res.status(500).json(err.message);
   }
 }
+
+//delete inquiry
+export const deleteInquiryById = async (req, res) => {
+  try {
+      const { inquiryId } = req.params;
+      await deleteInquiry(inquiryId);
+      res.status(200).json({ message: 'Inquiry deleted successfully' });
+  } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};

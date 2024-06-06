@@ -7,6 +7,15 @@ function DeliveryCard({ cardContent, index }) {
     setIsExpanded(!isExpanded);
   };
 
+  // Function to format the date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero
+    const day = String(date.getDate()).padStart(2, '0'); // Add leading zero
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div className="w-full bg-white bg-opacity-10 rounded-lg shadow-md overflow-hidden items-center px-5 mb-2" index={index}>
       <div className="flex flex-grow p-4 justify-between">
@@ -24,7 +33,7 @@ function DeliveryCard({ cardContent, index }) {
         </div>
         <div className="flex flex-col w-1/5 pr-4">
           <p className="text-white text-base font-bold mb-2">Order Date</p>
-          <p className="text-white text-base mb-2">{cardContent.datePlaced}</p>
+          <p className="text-white text-base mb-2">{formatDate(cardContent.datePlaced)}</p>
         </div>
         <div className="flex flex-col w-1/5 pr-4">
           <p className="text-white text-base font-bold mb-2">Total Price (Rs.)</p>

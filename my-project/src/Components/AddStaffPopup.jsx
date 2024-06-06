@@ -21,7 +21,7 @@ function AddStaffPopup({ onClose, fetch }) {
             if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
             } else {
-                setErrorMessage('An error occurred while adding the staff. Please try again.');
+                setErrorMessage('The staff user name already exists');
             }
         }
     };

@@ -64,3 +64,17 @@ export const getAllInquiry = () => {
     });
   });
 }
+
+//delete inquiry
+export const deleteInquiry = (inquiryId) => {
+  return new Promise((resolve, reject) => {
+      const q = `DELETE FROM inquiry WHERE INQUIRY_ID = ?`;
+      db.query(q, [inquiryId], (err, result) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(result);
+          }
+      });
+  });
+};
