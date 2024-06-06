@@ -18,12 +18,15 @@ const TotalSales = () => {
     fetchTotalSales();
   }, []);
 
+  // Convert totalSales to millions and format to 2 decimal places
+  const totalSalesInMillions = (totalSales / 1000000).toFixed(2);
+
   return (
     <div className="bg-white bg-opacity-10 shadow-lg rounded-lg p-6 flex items-center justify-between">
       <div>
-        <h2 className="text-3xl  text-white mb-1">Total Sales</h2>
-        <h6 className="text-sm  text-white mb-4">(This Month)</h6>
-        <p className="text-3xl font-semibold text-white">Rs. {totalSales}</p>
+        <h2 className="text-3xl text-white mb-1">Total Sales</h2>
+        <h6 className="text-sm text-white mb-4">(This Month)</h6>
+        <p className="text-3xl font-semibold text-white">Rs. {totalSalesInMillions} M</p>
       </div>
       <img src={totalSalesImage} alt="Total Sales" className="w-16 h-16 object-contain" />
     </div>

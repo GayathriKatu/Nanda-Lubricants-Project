@@ -19,6 +19,8 @@ import StaffDetails from './pages/StaffDetails';
 import UpdateStaff from './Components/UpdateStaff';
 import AdminReports from './pages/AdminReports';
 import { FaFacebook } from 'react-icons/fa';
+import ProductDisplay from './pages/ProductDisplay';
+
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user_id', 'user_type']);
@@ -39,7 +41,7 @@ function App() {
                     <Link to='/' className="nav-link">Home</Link>
                     <Link to='/login' className="nav-link">Login</Link>
                     <Link to='/register' className="nav-link">Register</Link>
-                    <Link to='/shop' className="nav-link">Shop</Link>
+                    <Link to='/productdisplay' className="nav-link">Products</Link>
 
                 </>
             );
@@ -119,6 +121,7 @@ function App() {
                     <Route path='/staffdetails' element={<StaffDetails />} />
                     <Route path='/updatestaff' element={<UpdateStaff />} />
                     <Route path='/adminreports' element={<AdminReports />} />
+                    <Route path='/productdisplay' element={<ProductDisplay />} />
                 </Routes>
             </div>
         </BrowserRouter>

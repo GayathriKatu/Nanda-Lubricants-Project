@@ -139,7 +139,7 @@ function UpdateStock({ onClose }) {
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-md w-96 border border-white overflow-y-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-white">Update Stock</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-white">Update New Stock</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="productId" className="block text-sm font-medium text-white">Product ID</label>
