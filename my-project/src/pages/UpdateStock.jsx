@@ -8,7 +8,6 @@ function UpdateStock({ onClose }) {
     productId: "",
     productName: "",
     description: "",
-    unitPrice: "",
     category: "" 
   });
 

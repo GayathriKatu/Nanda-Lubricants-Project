@@ -34,10 +34,10 @@ export const proNames = async (req,res) => {
 }
 
 export const Addproduct = async (req,res) => {
-    const { productId,productName,description,unitPrice,category }  = req.body;
-    console.log(productId,productName,description,unitPrice,category)
+    const { productId,productName,description,category }  = req.body;
+    console.log(productId,productName,description,category)
     try{
-        const data = await  AddproductService(productId,productName,description,unitPrice,category);
+        const data = await  AddproductService(productId,productName,description,category);
         return res.status(200).json(data);
     }catch(err){
         if(err.code == 'ER_DUP_ENTRY'){

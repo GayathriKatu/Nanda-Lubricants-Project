@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PrimaryButton from "../Components/PrimaryButton";
 import ProductComponent from "../Components/ProductComponent";
 import Inquiry from "./Inquiry"; // Import the inquiry popup component
+import SearchBar from "../Components/SearchBar"; // Import the SearchBar component
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
@@ -21,7 +22,11 @@ function MainShop() {
   // State to control the visibility of the inquiry popup
   const [showInquiry, setShowInquiry] = useState(false);
   const [cookies] = useCookies(['user_id']);
-  const [retailer,setRetailer] = useState([]);
+  const [retailer, setRetailer] = useState([]);
+  const [details, setDetails] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   // Function to open the inquiry popup
   const openInquiry = () => {
@@ -33,12 +38,11 @@ function MainShop() {
     setShowInquiry(false);
   };
 
-  const [details, setDetails] = useState([]);
-
   const fetchDetails = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/products/mainshopdetails");
       setDetails(res.data);
+      setFilteredProducts(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -46,11 +50,12 @@ function MainShop() {
 
   const fetchLoginRetailer = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/retailer/details-by-user",{
-      headers: {
-        user_id: cookies.user_id
-      }});
-        setRetailer(res.data[0]);
+      const res = await axios.get("http://localhost:8000/api/retailer/details-by-user", {
+        headers: {
+          user_id: cookies.user_id
+        }
+      });
+      setRetailer(res.data[0]);
     } catch (err) {
       console.log(err);
     }
@@ -61,6 +66,33 @@ function MainShop() {
     fetchLoginRetailer();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm === '') {
+      setFilteredProducts(details);
+    } else {
+      setFilteredProducts(details.filter(product =>
+        product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+      ));
+    }
+  }, [searchTerm, details]);
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchTerm(suggestion);
+    setIsSearchFocused(false);
+  };
+
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleSearchBlur = () => {
+    setIsSearchFocused(false);
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -68,6 +100,17 @@ function MainShop() {
       <div className="flex justify-between items-center mb-4">
         <div className="flex">
           <p className="text-3xl font-semibold">SHOP</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <label className="text-white">Search Product</label>
+          <SearchBar
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+            suggestions={isSearchFocused ? details.map(d => d.productName) : []}
+            onSuggestionClick={handleSuggestionClick}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
+          />
         </div>
         <div className="flex gap-4 items-center">
           <div>
@@ -80,7 +123,7 @@ function MainShop() {
       </div>
 
       <div className="flex w-full flex-wrap gap-4 mt-6">
-        {details.map((detail, index) => (
+        {filteredProducts.map((detail, index) => (
           <div className="flex w-[21rem] shrink-0" key={index}>
             <ProductComponent cardContent={detail} index={index} />
           </div>
@@ -89,7 +132,7 @@ function MainShop() {
 
       {showInquiry && (
         <Overlay>
-          <Inquiry onClose={closeInquiry} retailer={retailer}/>
+          <Inquiry onClose={closeInquiry} retailer={retailer} />
         </Overlay>
       )}
     </div>

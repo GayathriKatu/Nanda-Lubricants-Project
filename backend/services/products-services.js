@@ -79,11 +79,11 @@ export const getAllProNames = () => {
     });
 };
 
-export const AddproductService = ( productId,productName,description,unitPrice, category ) => {
+export const AddproductService = ( productId,productName,description, category ) => {
     return new Promise ( (resolve,reject) => {
-        const q = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, UNIT_PRICE, CATEGORY_ID) VALUES (?,?,?,?,?)`;
+        const q = `INSERT INTO products (PRODUCT_ID, PRODUCT_NAME, P_DESCRIPTION, CATEGORY_ID) VALUES (?,?,?,?)`;
 
-        db.query( q,[ productId,productName,description,unitPrice, category ] , (err,data) =>{
+        db.query( q,[ productId,productName,description, category ] , (err,data) =>{
             if(err){
                 reject(err)
             }else{
