@@ -20,6 +20,7 @@ import UpdateStaff from './Components/UpdateStaff';
 import AdminReports from './pages/AdminReports';
 import { FaFacebook } from 'react-icons/fa';
 import ProductDisplay from './pages/ProductDisplay';
+import RetailerDisplay from './pages/RetailerDisplay';
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
                             <Link to='/staffdetails' className="nav-link">Staff</Link>
                             <Link to='/deliveryschedule' className="nav-link">Delivery Schedule</Link>
                             <Link to='/inquirydisplay' className="nav-link">Inquiries</Link>
+                            <Link to='/retailerdisplay' className="nav-link">Retailers</Link>
                             
                         </>
                     );
@@ -122,6 +124,8 @@ function App() {
                     <Route path='/updatestaff' element={<UpdateStaff />} />
                     <Route path='/adminreports' element={<AdminReports />} />
                     <Route path='/productdisplay' element={<ProductDisplay />} />
+                    <Route path='/retailerdisplay' element={<RetailerDisplay />} />
+
                 </Routes>
             </div>
         </BrowserRouter>

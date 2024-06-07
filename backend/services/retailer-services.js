@@ -66,4 +66,40 @@ export const GetDetailsByUserId = (userId) => {
     })
 }
 
+//display customer
+export const getAllRetailerDetails = () => {
+    return new Promise((resolve, reject) => {
+      const q = `SELECT USER_NAME, SHOP_NAME, ADDRESS, CONTACT_NO, ROUTE_NAME, EMAIL_ADDRESS FROM retailer`;
+  
+      db.query(q, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+  
+          const retailer = data.map(item => ({
+            userName: item.USER_NAME,
+            shopName: item.SHOP_NAME,
+            address: item.ADDRESS,
+            contactNo: item.CONTACT_NO,
+            email: item.EMAIL_ADDRESS
+          }));
+  
+          resolve(retailer);
+        }
+      });
+    });
+  }
 
+//delete retailer
+// export const deleteRetailer = (retailerId) => {
+//     return new Promise((resolve, reject) => {
+//         const q = `DELETE FROM retailer WHERE RETAILER_ID = ?`;
+//         db.query(q, [retailerId], (err, result) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(result);
+//             }
+//         });
+//     });
+//   };

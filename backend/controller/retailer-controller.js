@@ -1,4 +1,4 @@
-import {getAllRetail,Register,GetDetailsByUserId} from '../services/retailer-services.js';
+import {getAllRetail,Register,GetDetailsByUserId, getAllRetailerDetails} from '../services/retailer-services.js';
 
 export const retailDetails = async (req,res) => {
     try{
@@ -35,3 +35,26 @@ export const getDetailsByUserId = async (req,res) => {
         return res.status(500).json(err.message);
     }
 }
+
+// retailer details display
+export const retailerDetails = async (req,res) => {
+    try{
+     
+     const data = await getAllRetailerDetails();
+     res.json(data);
+     
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+  }
+
+//delete retailer
+// export const deleteRetailerById = async (req, res) => {
+//     try {
+//         const { retailerId } = req.params;
+//         await deleteRetailer(retailerId);
+//         res.status(200).json({ message: 'Retailer deleted successfully' });
+//     } catch (err) {
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+//   };
