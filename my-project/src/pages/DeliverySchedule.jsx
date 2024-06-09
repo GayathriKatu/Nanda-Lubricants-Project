@@ -120,7 +120,8 @@ function DeliverySchedule() {
             <DropDown
               className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-black"
               id="sortbyRoute"
-              options={["Wariyapola 01", "Pothuhera", "Kadawatha 01"]}
+              options={['Wariyapola','Alawwa','Mawathagama','Mahawa','Hettipola','Melsiripura','Kuliyapitiya','Nikaweratiya',
+                'Kaduwela','Puttlam','Kalpitiya','Bingiriya','Dambadeniya','Naththandiya','Dankotuwa','Hiripitiya']}
               value={selectedSortByRoute}
               onChange={handleSortByRoute}
             />

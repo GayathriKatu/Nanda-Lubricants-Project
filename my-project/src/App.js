@@ -65,6 +65,7 @@ function App() {
                             <Link to='/currentstock' className="nav-link">Current Stock</Link>
                             <Link to='/deliveryschedule' className="nav-link">Delivery Schedule</Link>
                             <Link to='/inquirydisplay' className="nav-link">Inquiries</Link>
+                            <Link to='/retailerdisplay' className="nav-link">Retailers</Link>
                         </>
                     );
                 case 'Admin':

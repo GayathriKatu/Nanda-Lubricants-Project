@@ -144,15 +144,50 @@ export const UpdateStaffAndUser = async(data) => {
     });
 };
 
-export const deleteStaff = (staffId) => {
+// export const deleteStaff = (staffId) => {
+//     return new Promise((resolve, reject) => {
+//         const q = `DELETE FROM staff WHERE STAFF_ID = ?`;
+//         db.query(q, [staffId], (err, result) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(result);
+//             }
+//         });
+//     });
+// };
+
+export const deleteStaff = (staffId, userId) => {
     return new Promise((resolve, reject) => {
-        const q = `DELETE FROM staff WHERE STAFF_ID = ?`;
-        db.query(q, [staffId], (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
+        db.beginTransaction(err => {
+            if (err) return reject(err);
+
+            const deleteStaffQuery = `DELETE FROM staff WHERE STAFF_ID = ?`;
+            db.query(deleteStaffQuery, [staffId], (err, result) => {
+                if (err) {
+                    return db.rollback(() => {
+                        reject(err);
+                    });
+                }
+
+                const deleteUserQuery = `DELETE FROM user_ WHERE USER_ID = ?`;
+                db.query(deleteUserQuery, [userId], (err, result) => {
+                    if (err) {
+                        return db.rollback(() => {
+                            reject(err);
+                        });
+                    }
+
+                    db.commit(err => {
+                        if (err) {
+                            return db.rollback(() => {
+                                reject(err);
+                            });
+                        }
+                        resolve(result);
+                    });
+                });
+            });
         });
     });
 };

@@ -5,22 +5,8 @@ import PrimaryButton from './Components/PrimaryButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const ROUTES = [
-    'Wariyapola 01',
-    'Pothuhera',
-    'Route 3',
-    'Route 4',
-    'Route 5',
-    'Route 6',
-    'Route 7',
-    'Route 8',
-    'Route 9',
-    'Route 10',
-    'Route 11',
-    'Route 12',
-    'Route 13',
-    'Route 14',
-    'Route 15'
+const ROUTES = ['Wariyapola','Alawwa','Mawathagama','Mahawa','Hettipola','Melsiripura','Kuliyapitiya','Nikaweratiya',
+                'Kaduwela','Puttlam','Kalpitiya','Bingiriya','Dambadeniya','Naththandiya','Dankotuwa','Hiripitiya'
 ];
 
 const RegisterPage = () => {
@@ -127,7 +113,8 @@ const RegisterPage = () => {
                                 pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
                                 validate: {
                                     noUppercase: value => value === value.toLowerCase() || "Email address must not contain uppercase letters"
-                                }
+                                },
+                                maxLength: { value: 30, message: "Email must be less than or equal to 30 characters" }
                             })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
@@ -144,9 +131,12 @@ const RegisterPage = () => {
                             id="username"
                             autoComplete='off'
                             type="text"
-                            {...register('username')}
+                            {...register('username', { 
+                                maxLength: { value: 20, message: "Username must be less than or equal to 20 characters" } 
+                            })}
                             className="w-full md:w-80 px-3 py-2 border border-gray-300 rounded text-black opacity-20"
                         />
+                        {errors.username && <p className="text-red-500">{errors.username.message}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block mb-2 text-white">Password:</label>

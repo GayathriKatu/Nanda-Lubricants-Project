@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/register', register);
 router.get('/list', staffDetails);
 router.post('/update', updateStaff);
-router.delete('/delete/:staffId', deleteStaffById);
+router.delete('/delete/:staffId/:userId', deleteStaffById);
 
 export const staffRoutes = router;

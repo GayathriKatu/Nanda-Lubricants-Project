@@ -103,3 +103,18 @@ export const getAllRetailerDetails = () => {
 //         });
 //     });
 //   };
+
+//username list
+export const getAllRetailUsernames = () => {
+    return new Promise ( (resolve,reject) => {
+        const q = `SELECT USER_NAME FROM retailer`;
+        db.query ( q,(err,data) => {
+            if(err){
+                reject(err);
+            }else{
+                console.log(data[0]);
+                resolve(data[0]);
+            }
+        });
+    })
+}

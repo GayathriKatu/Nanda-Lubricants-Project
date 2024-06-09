@@ -1,4 +1,4 @@
-import {getAllRetail,Register,GetDetailsByUserId, getAllRetailerDetails} from '../services/retailer-services.js';
+import {getAllRetail,Register,GetDetailsByUserId, getAllRetailerDetails, getAllRetailUsernames} from '../services/retailer-services.js';
 
 export const retailDetails = async (req,res) => {
     try{
@@ -58,3 +58,15 @@ export const retailerDetails = async (req,res) => {
 //         res.status(500).json({ error: 'Internal server error' });
 //     }
 //   };
+
+//username list
+export const retailUsernames = async (req,res) => {
+    try{
+     
+     const data = await getAllRetailUsernames();
+     res.json(data);
+     
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}

@@ -156,7 +156,7 @@ function UpdateStock({ onClose }) {
             <DropDown
               className="mt-1 p-2 w-full bg-white bg-opacity-20 border border-white rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               id="category"
-              options={['PC', 'DC', 'TWC']}
+              options={['PC', 'DC', 'TWC', 'MC','UTTO', 'OBO', 'IHO', 'PEP', 'TF']}
               onChange={(e) => handleCategoryChange(e.target.value)}
             />
             {errors.category && <span className="text-red-500 text-sm">{errors.category}</span>}

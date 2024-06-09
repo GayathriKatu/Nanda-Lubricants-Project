@@ -5,10 +5,10 @@ import axios from 'axios';
 
 function StaffCard({ cardContent, index }) {
 
-  const handleDelete = async (staffId) => {
-    console.log(staffId);
+  const handleDelete = async (staffId, userId) => {
+    console.log(staffId, userId);
     try {
-      await axios.delete(`http://localhost:8000/api/staff/delete/${staffId}`);
+      await axios.delete(`http://localhost:8000/api/staff/delete/${staffId}/${userId}`);
       // Optionally, update state or perform any other action after successful deletion
       // You may want to refetch the data after deletion to update the UI
     } catch (error) {
@@ -17,8 +17,6 @@ function StaffCard({ cardContent, index }) {
   };
 
   const navigate = useNavigate();
-
-  
 
   return (
     <div className="w-full bg-white bg-opacity-10 rounded-lg shadow-md overflow-hidden items-center px-5 mb-2" index={index}>
@@ -40,7 +38,7 @@ function StaffCard({ cardContent, index }) {
             <PrimaryButton text="Update" onClick={() => navigate("/updatestaff", { state: { cardContent } })} />
           </div>
           <div>
-            <PrimaryButton text="Delete" onClick={() => handleDelete(cardContent.staffId)} />
+            <PrimaryButton text="Delete" onClick={() => handleDelete(cardContent.staffId, cardContent.userId)} />
           </div>
         </div>
       </div>

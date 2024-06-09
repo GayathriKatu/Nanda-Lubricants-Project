@@ -28,12 +28,22 @@ export const updateStaff = async (req, res) => {
     }
 }
 
+// export const deleteStaffById = async (req, res) => {
+//     try {
+//         const { staffId } = req.params;
+//         await deleteStaff(staffId);
+//         res.status(200).json({ message: 'Staff deleted successfully' });
+//     } catch (err) {
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// };
+
 export const deleteStaffById = async (req, res) => {
     try {
-        const { staffId } = req.params;
-        await deleteStaff(staffId);
-        res.status(200).json({ message: 'Staff deleted successfully' });
+        const { staffId, userId } = req.params; // Assuming userId is also passed in params
+        await deleteStaff(staffId, userId);
+        res.status(200).json({ message: 'Staff and user deleted successfully' });
     } catch (err) {
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json( err.message );
     }
 };
