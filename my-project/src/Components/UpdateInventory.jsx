@@ -57,7 +57,7 @@ function UpdateInventory() {
     if (product.quantity && (!/^\d+$/.test(product.quantity) || parseInt(product.quantity, 10) < 0)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        quantity: "Quantity should be a non-negative integer."
+        quantity: "Invalid Quantity"
       }));
       alert("Please correct the errors before submitting.");
       return;

@@ -20,7 +20,7 @@ const BestRoutes = () => {
 
   return (
     <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
-      <h2 className="text-3xl  mb-6 text-white">Best 5 Routes</h2>
+      <h2 className="text-3xl  mb-6 text-white">Best Routes</h2>
       <ul>
         {routes.map((route, index) => (
           <li key={index} className="flex items-center mb-2 text-white">

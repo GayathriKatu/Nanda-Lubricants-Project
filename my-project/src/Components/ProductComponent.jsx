@@ -13,7 +13,7 @@ function ProductComponent({ cardContent, index }) {
       <ul className="text-sm text-white mb-2">
         {volumeOrder.map(volume => (
           cardContent.unitPrices[volume] !== undefined && (
-            <li key={volume} className="tabular-nums">{volume} : <span className="ml-6">${cardContent.unitPrices[volume]}</span></li> 
+            <li key={volume} className="tabular-nums">{volume} : <span className="ml-6">Rs. {cardContent.unitPrices[volume]}/=</span></li> 
           )
         ))}
       </ul>

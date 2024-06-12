@@ -8,7 +8,6 @@ import DropDown from "../Components/DropDown";
 import DeliveryCard from "../Components/DeliveryCard";
 import logo from "../Images/NandaLogo.png";
 
-
 function DeliverySchedule() {
   const [selectedSortByRoute, setSelectedSortByRoute] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
@@ -76,13 +75,13 @@ function DeliverySchedule() {
     // Add space before table
     doc.addImage(logo, 'JPEG', 180, 10, 15, 15);
     doc.text(`Filtered Route: ${selectedSortByRoute || "All Routes"}`, 14, 42);
-    doc.text(`Date Range: ${fromDate.toDateString()} - ${toDate.toDateString()}`, 14, 48);
+    doc.text(`Date Range: ${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`, 14, 48);
     
     const tableData = filteredDetails.map((detail) => [
       detail.orderId,
       detail.shopName,
       detail.routeName,
-      detail.datePlaced,
+      new Date(detail.datePlaced).toLocaleDateString(),
       detail.totalPrice, // Add totalPrice to the table data
     ]);
 

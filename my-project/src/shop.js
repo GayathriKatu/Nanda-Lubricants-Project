@@ -151,7 +151,7 @@ function Shop() {
                                         required: 'Quantity is required',
                                         pattern: {
                                             value: /^[0-9]+$/,
-                                            message: 'Quantity should be a non-negative integer'
+                                            message: 'Invalid Quantity'
                                         }
                                     })}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"

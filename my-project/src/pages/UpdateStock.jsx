@@ -35,7 +35,7 @@ function UpdateStock({ onClose }) {
     if (name === 'description' && value.length > 200) {
       errorMessage = "Description should not exceed 200 characters.";
     } else if (name === 'unitPrice' && (!/^\d+$/.test(value) || parseInt(value, 10) < 0)) {
-      errorMessage = "Unit Price should be a non-negative integer.";
+      errorMessage = "Invalid Unit Price";
     }
 
     setProduct(prev => ({
@@ -64,7 +64,7 @@ function UpdateStock({ onClose }) {
     let errorMessage = "";
 
     if (name === 'quantity' && (!/^\d+$/.test(value) || parseInt(value, 10) < 0)) {
-      errorMessage = "Quantity should be a non-negative integer.";
+      errorMessage = "Invalid Quantity";
     }
 
     setStock(prev => ({

@@ -33,7 +33,7 @@ const PreviewComponent = ({ tableRows }) => {
     });
 
     doc.text(`Total: ${total}`, 20, doc.autoTable.previous.finalY + 10);
-    doc.save('order_preview.pdf');
+    doc.save('Invoice.pdf');
   };
 
   return (
@@ -47,8 +47,8 @@ const PreviewComponent = ({ tableRows }) => {
               <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800">Product Name</th>
               <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800">Volume</th>
               <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800">Quantity</th>
-              <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800">Unit Price</th>
-              <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800 text-right">SubTotal</th>
+              <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800">Unit Price (Rs.)</th>
+              <th className="py-2 px-4 border border-gray-300 text-white bg-gray-800 text-right">SubTotal (Rs.)</th>
             </tr>
           </thead>
           <tbody>

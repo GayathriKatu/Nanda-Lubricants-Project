@@ -17,14 +17,9 @@ function Inquiry({ onClose, retailer }) {
     let error = "";
 
     switch (name) {
-      case 'userName':
-        if (!/^[a-zA-Z_]+$/.test(value)) {
-          error = "Username should contain only letters and underscores";
-        }
-        break;
       case 'orderId':
         if (!/^\d+$/.test(value) || parseInt(value, 10) < 0) {
-          error = "Order ID should be a non-negative integer";
+          error = "Invalid Order ID";
         }
         break;
       case 'contactNumber':

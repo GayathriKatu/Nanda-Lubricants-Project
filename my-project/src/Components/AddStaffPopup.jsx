@@ -75,7 +75,7 @@ function AddStaffPopup({ onClose, fetch }) {
                             autoComplete="off"
                             {...register('contactNo', {
                                 required: 'Contact No is required',
-                                pattern: { value: /^\d{10}$/, message: 'Contact No must be a non-negative integer and exactly 10 characters' }
+                                pattern: { value: /^\d{10}$/, message: 'Invalid contact number' }
                             })}
                         />
                         {errors.contactNo && <span className="text-red-500">{errors.contactNo.message}</span>}

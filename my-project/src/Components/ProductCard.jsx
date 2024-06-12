@@ -51,7 +51,7 @@ function ProductCard({ cardContent, index }) {
           <p className="text-white text-base mb-2">{cardContent.stock}</p>
         </div>
         <div className="flex flex-col w-1/4 pr-4">
-          <p className="text-white text-base font-bold mb-2">Price (Rs.)</p>
+          <p className="text-white text-base font-bold mb-2">Unit Price (Rs.)</p>
           <p className="text-white text-base mb-2">{cardContent.price}</p>
         </div>
         <div className="flex items-center">

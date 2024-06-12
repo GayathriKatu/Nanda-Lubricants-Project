@@ -53,7 +53,8 @@ function App() {
                         <>
                             <Link to='/' className="nav-link">Home</Link>
                             <Link to='/login' className="nav-link">Login</Link>
-                            <Link to='/shop' className="nav-link">Shop</Link>
+                            <Link to='/register' className="nav-link">Register</Link>
+                            <Link to='/mainshop' className="nav-link">Shop</Link>
                             {/* <Link to='/register' className="nav-link">Register</Link> */}
                         </>
                     );
@@ -113,19 +114,27 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/login' element={<Login />} />
-                    <Route path="/shop" element={<PrivateRoute element={<Shop />} />} />
-                    <Route path='/currentstock' element={<CurrentStock />} />
-                    <Route path='/deliveryschedule' element={<DeliverySchedule />} />
+                    <Route path='/shop' element={<Shop />} />
+                    {/* <Route path="/shop" element={<PrivateRoute element={<Shop />} />} /> */}
+                    {/* <Route path='/currentstock' element={<CurrentStock />} /> */}
+                    {/* <Route path='/deliveryschedule' element={<DeliverySchedule />} /> */}
                     <Route path='/orderpreview' element={<OrderPreview />} />
                     <Route path='/mainshop' element={<MainShop />} />
                     <Route path='/orderpopup' element={<OrderPopup />} />
                     <Route path='/updateinventory' element={<UpdateInventory />} />
-                    <Route path='/inquirydisplay' element={<InquiryDisplay />} />
-                    <Route path='/staffdetails' element={<StaffDetails />} />
+                    {/* <Route path='/inquirydisplay' element={<InquiryDisplay />} /> */}
+                    {/* <Route path='/staffdetails' element={<StaffDetails />} /> */}
                     <Route path='/updatestaff' element={<UpdateStaff />} />
-                    <Route path='/adminreports' element={<AdminReports />} />
+                    {/* <Route path='/adminreports' element={<AdminReports />} /> */}
                     <Route path='/productdisplay' element={<ProductDisplay />} />
-                    <Route path='/retailerdisplay' element={<RetailerDisplay />} />
+                    {/* <Route path='/retailerdisplay' element={<RetailerDisplay />} /> */}
+                    <Route path="/adminreports" element={<PrivateRoute element={<AdminReports />} />} />
+                    <Route path="/staffdetails" element={<PrivateRoute element={<StaffDetails />} />} />
+                    <Route path="/currentstock" element={<PrivateRoute element={<CurrentStock />} />} />
+                    <Route path="/deliveryschedule" element={<PrivateRoute element={<DeliverySchedule />} />} />
+                    <Route path="/inquirydisplay" element={<PrivateRoute element={<InquiryDisplay />} />} />
+                    <Route path="/retailerdisplay" element={<PrivateRoute element={<RetailerDisplay />} />} />
+
 
                 </Routes>
             </div>

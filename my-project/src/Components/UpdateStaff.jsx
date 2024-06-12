@@ -52,8 +52,11 @@ function UpdateStaff({ onClose }) {
                         <input
                             type="password"
                             className="w-full p-2 border border-gray-700 rounded bg-gray-700 text-white"
-                            {...register('password')}
+                            {...register('password', {
+                                validate: value => value.length === 0 || (value.length >= 6 && value.length <= 12) || "Password must be between 6 and 12 characters"
+                            })}
                         />
+                        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-white">Full Name</label>
@@ -76,7 +79,7 @@ function UpdateStaff({ onClose }) {
                             autoComplete="off"
                             {...register('contactNo', {
                                 required: 'Contact No is required',
-                                pattern: { value: /^\d{10}$/, message: 'Contact No must be a 10-character non-negative integer' }
+                                pattern: { value: /^\d{10}$/, message: 'Invalid contact number' }
                             })}
                         />
                         {errors.contactNo && <span className="text-red-500">{errors.contactNo.message}</span>}

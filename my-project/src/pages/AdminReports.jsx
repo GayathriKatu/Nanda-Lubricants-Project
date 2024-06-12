@@ -13,38 +13,38 @@ const AdminReports = () => {
     <div className="container mx-auto p-4 bg-gray-800">
       <h1 className="text-3xl mb-8 text-white mt-6">NANDA LUBRICANT DASHBOARD</h1>
       <div className="grid grid-cols-4 gap-6">
-        {/* Left Side (1:3 ratio) */}
+        
         <div className="col-span-1">
-          <div className="mb-4"> {/* Add margin-bottom for space */}
+          <div className="mb-4"> 
             <TotalSales />
           </div>
-          <div className="mb-4"> {/* Add margin-bottom for space */}
+          <div className="mb-4"> 
             <TotalInventory />
           </div>
-          <div className="mb-4"> {/* Add margin-bottom for space */}
+          <div className="mb-4"> 
             <TotalInventoryValue />
           </div>
         </div>
 
-        {/* Right Side (3:1 ratio) */}
+        
         <div className="col-span-3">
           <div className="grid grid-cols-2 gap-6">
-            {/* First Part of Right Side (1:2 ratio) */}
+          
             <div className="col-span-1">
-              <div className="mb-4"> {/* Add margin-bottom for space */}
+              <div className="mb-4"> 
                 <OrderCountByDate />
               </div>
-              <div className="mb-4"> {/* Add margin-bottom for space */}
+              <div className="mb-4"> 
                 <BestRoutes />
               </div>
             </div>
 
-            {/* Second Part of Right Side (1:2 ratio) */}
+          
             <div className="col-span-1">
-              <div className="mb-4"> {/* Add margin-bottom for space */}
+              <div className="mb-4"> 
                 <BestCustomers />
               </div>
-              <div className="mb-4"> {/* Add margin-bottom for space */}
+              <div className="mb-4"> 
                 <TopSellingProducts />
               </div>
             </div>

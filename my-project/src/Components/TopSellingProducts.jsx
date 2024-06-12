@@ -20,7 +20,7 @@ const TopSellingProducts = () => {
 
   return (
     <div className="bg-white bg-opacity-10 shadow-md rounded p-4">
-      <h2 className="text-3xl mb-6 text-white">Top 10 Selling Products</h2>
+      <h2 className="text-3xl mb-6 text-white">Top Selling Products</h2>
       <ul>
         {products.map((product, index) => (
           <li key={index} className="flex items-center mb-2 text-white">
