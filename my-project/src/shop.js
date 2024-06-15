@@ -12,8 +12,10 @@ function Shop() {
     const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
     const [products, setProducts] = useState([]);
     const [tableRows, setTableRows] = useState([]);
-    const [productName,setProductName] = useState(null);
-    const [productVolume,setProductVolume] = useState(null);
+    const [productName, setProductName] = useState(null);
+    const [productVolume, setProductVolume] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const fetchDetails = async () => {
         try {
@@ -21,29 +23,46 @@ function Shop() {
             setProducts(res.data);
         } catch (err) {
             console.log(err);
+            setErrorMessage("Products added is empty or Products ordered are not available. cannot place the order");
         }
     };
     
     const saveAdd = async (data) => {
         setTableRows((prevTableRows) => [...prevTableRows, data]);
-        setValue('product',null);
-        setValue('quantity',null);
-        setValue('volume',null);
-        setValue('unitPrice',null);
+        setValue('product', null);
+        setValue('quantity', null);
+        setValue('volume', null);
+        setValue('unitPrice', null);
         setProductName(null);
         setProductVolume(null); 
     };
     
     const placeOrder = async () => {
+        setIsLoading(true);
+        setErrorMessage("");
         try {
             const res = await axios.post("http://localhost:8000/api/order/addFullOrder", tableRows);
             if (res.status === 200) {
                 reset();
                 console.log("Added Success");
                 navigate('/orderpopup', { state: { tableRows } });
+            } else {
+                console.log(`Unexpected status code: ${res.status}`);
+                setErrorMessage("Failed to place order. Please try again later.");
             }
         } catch (err) {
-            console.log(err);
+            if (err.response) {
+                console.log(`Server responded with status ${err.response.status}`);
+                setErrorMessage(`Server error: ${err.response.data.message || 'Please try again later.'}`);
+            } else if (err.request) {
+                console.log('No response received');
+                setErrorMessage("Network error: Please check your internet connection.");
+            } else {
+                console.log('Error', err.message);
+                setErrorMessage("An unexpected error occurred. Please try again later.");
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -60,39 +79,27 @@ function Shop() {
     const fetchUnitPrice = async () => {
         if (productName && productVolume) {
             try {
-                const res = await axios.post("http://localhost:8000/api/stock/unitPrice", { productName,productVolume });
+                const res = await axios.post("http://localhost:8000/api/stock/unitPrice", { productName, productVolume });
                 if (res.status === 200) {
                     setValue('unitPrice', res.data[0].UNIT_PRICE);
                     console.log(res.data[0].UNIT_PRICE);
                 }
             } catch (err) {
                 console.error(err);
+                setErrorMessage("Products added are not available. Please try again.");
             }
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchUnitPrice();
-    },[productName,productVolume])
+    }, [productName, productVolume]);
 
     const volumeOptions = [
         '1 L',
         '5 L',
         '20 L',
         '210 L'
-    ];
-
-    const categoryOptions = [
-        'Diesel',
-        'Petrol',
-        'Motor Cycle Oil',
-        'Three Wheeler Oil',
-        'UTT Oil',
-        'Outboard Oil',
-        'Greases',
-        'Industrial and Hydraulic Oil',
-        'Premium ECO Plus',
-        'Transmission Oil'
     ];
 
     return (
@@ -106,20 +113,6 @@ function Shop() {
                         <h2 className="text-xl font-semibold mb-4">Order Details</h2>
                         <form onSubmit={handleSubmit(saveAdd)}>
                             <div>
-                                {/* <label>Category:</label>
-                                <select
-                                    {...register('category', { required: 'Category is required' })}
-                                    className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-2"
-                                >
-                                    <option value="">Select Category</option>
-                                    {categoryOptions.map((option) => (
-                                        <option key={option} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.category && <p className="text-red-500">{errors.category.message}</p>} */}
-
                                 <label>Product:</label>
                                 <select
                                     {...register('product', { required: 'Product is required' })}
@@ -133,8 +126,7 @@ function Shop() {
                                 >
                                     <option value="">Select Product</option>
                                     {products.map((product, index) => (
-                                        <option key={index} value={product.productName}
-                                            unitprice={product.unitPrice} pid={product.productId} >
+                                        <option key={index} value={product.productName} pid={product.productId}>
                                             {product.productName}
                                         </option>
                                     ))}
@@ -144,9 +136,6 @@ function Shop() {
                                 <label>Quantity:</label>
                                 <input
                                     type="text"
-                                    // type="number"
-                                    // min={1}
-                                    // autoComplete='off'
                                     {...register('quantity', {
                                         required: 'Quantity is required',
                                         pattern: {
@@ -161,7 +150,7 @@ function Shop() {
                                 <label>Volume:</label>
                                 <select
                                     {...register('volume', { required: 'Volume is required' })}
-                                    onClick={(e)=>{setProductVolume(e.target.value)}}
+                                    onClick={(e) => { setProductVolume(e.target.value) }}
                                     className="w-full px-4 py-2 border text-black border-gray-300 rounded-md mb-4"
                                 >
                                     <option value="">Select Volume</option>
@@ -186,7 +175,8 @@ function Shop() {
                     </div>
                 </div>
                 <div className="mt-4 flex justify-end">
-                    <PrimaryButton text="Place Order" onClick={placeOrder} />
+                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                    <PrimaryButton text={isLoading ? "Placing Order..." : "Place Order"} onClick={placeOrder} disabled={isLoading} />
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ import 'jspdf-autotable';
 
 const PreviewComponent = ({ tableRows }) => {
   // Calculate the total
-  const total = tableRows.reduce((acc, row) => acc + parseFloat(row.quantity * row.unitPrice), 0).toFixed(2);
+  const total = tableRows.reduce((acc, row) => acc + (row.unitPrice ? parseFloat(row.quantity * row.unitPrice) : 0), 0).toFixed(2);
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -20,8 +20,8 @@ const PreviewComponent = ({ tableRows }) => {
         row.product,
         row.volume,
         row.quantity,
-        row.unitPrice,
-        (row.quantity * row.unitPrice).toFixed(2),
+        row.unitPrice ? row.unitPrice : "Product not available",
+        row.unitPrice ? (row.quantity * row.unitPrice).toFixed(2) : "Product not available. please refresh the order",
       ];
       tableRowsData.push(rowData);
     });
@@ -58,8 +58,8 @@ const PreviewComponent = ({ tableRows }) => {
                 <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.product}</td>
                 <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.volume}</td>
                 <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.quantity}</td>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.unitPrice}</td>
-                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800 text-right">{(row.quantity * row.unitPrice).toFixed(2)}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800">{row.unitPrice ? row.unitPrice : "Product not available"}</td>
+                <td className="py-2 px-4 border border-gray-300 text-gray-200 bg-gray-800 text-right">{row.unitPrice ? (row.quantity * row.unitPrice).toFixed(2) : "Product not available"}</td>
               </tr>
             ))}
             <tr>
